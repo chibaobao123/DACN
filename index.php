@@ -21,6 +21,14 @@
         <br />
         <br />
 
+        <div class='ds_datsanDanhSachHuy' style="background-color:white;"></div>
+        <br />
+        <br />
+
+        <div class='ds_datsanDanhSachThanhToan' style="background-color:white;"></div>
+        <br />
+        <br />
+
         <b>TÌNH TRẠNG ĐẶT SÂN NGÀY <span class='tieudetimeIndex'></span></b><br /><br />
 
         <div class="time_table" style="background-color:white;"></div> <br />
@@ -228,6 +236,8 @@ body{
         $(document).ready(function() {
             
             xemDsDatSanIndex(getToday());
+            xemDsHuySan(getToday());
+            xemDsThanhToan(getToday());
 
             $('.datsan_ngaydat').daterangepicker({
                 singleDatePicker: true,
@@ -283,7 +293,9 @@ body{
                 
                 var date = new Date();
                 var hoursNow = date.getHours();
+                var hoursNow = date.getminutes();
                 var checkHours = bat_dau_gio - hoursNow;
+                var checkHours = bat_dau_phut - minutesNow;
 
                 var ngayPresent = date.getDate();
                 var thangPresent = date.getMonth();
@@ -302,16 +314,18 @@ body{
                 
                 if( checkNgay < 0 || checkThang < 0 || checkNam < 0) {
                     thongbaoloi("Đã quá thời gian đặt sân!!! ");
-                } else if (checkHours <= 0 ) {
+                } else if (checkHours < 0 ) {
                     thongbaoloi("Đã quá thời gian đặt sân!!!")
-                } else if(checkHours < 2) {
-                    thongbaoloi("Bạn phải đặt sân cách giờ đặt 2 tiếng !!!");
-                } else {
+                }else if (checkHours < 0  && checkMinutes > 30) {
+                    thongbaoloi("Đã quá thời gian đặt sân!!!")
+                } else if(checkHours == 0 && checkMinutes < 30 ) {
                     taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san);
+                    $("#formDatSan").css("display","none");
+                    $("#grayscreen").css("display","none");
+                }else{
+                    thongbaoloi("Lỗi hệ thống");
                 }
 
-                $("#formDatSan").css("display","none");
-                $("#grayscreen").css("display","none");
             });
             
             $("#datsan_cancel").click(function() {

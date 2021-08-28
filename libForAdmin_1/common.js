@@ -303,9 +303,9 @@ function xemDoanhThu(start, end) {
 
 function veTableDatSanDanhSachThanhToan(data) {
 	var html = "";
-	html += "<div style='background-color: #d1dcde'><b>DANH SÁCH THANH TOÁN (" + data.length + ")<button class='btn mx-3 dropdown_table'><i class='far fa-caret-square-down'></i></button><button class='btn btn_hide_dropdown d-none mx-3 '><i class='far fa-caret-square-down'></i></button></b></div>"
-	html += "<table class='mytable mytable_huysan d-none' style='width:100%; text-align: center' >";
-	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th>Yêu cầu hủy đặt sân</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
+	html += "<div style='background-color: #d1dcde'><b>DANH SÁCH THANH TOÁN (" + data.length + ")</b></div>"
+	html += "<table class='mytable mytable_huysan ' style='width:100%; text-align: center' >";
+	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
 	var chua_thanh_toan = 0;
@@ -355,26 +355,12 @@ function veTableDatSanDanhSachThanhToan(data) {
 		html += "<button class='disabled btnXoaDatSanDanhSachThanhToan btn btn-light border border-dark' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-times text-danger'></i></button></center></td>";
 
 		}
-
-		html += "<td><center><span>" + data[i].note + "</span></center></td>";
 		html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
 		html += "</tr>";
 	}
 
 	html += "</table>";
-	$(".ds_datsanDanhSachHuy").html(html);
-
-	$('.dropdown_table').click(function () {
-		$(".mytable_huysan").removeClass("d-none");
-		$(".btn_hide_dropdown").removeClass("d-none");
-		$(".dropdown_table").addClass("d-none");
-	})
-
-	$('.btn_hide_dropdown').click(function () {
-		$(".mytable_huysan").addClass("d-none");
-		$(".dropdown_table").removeClass("d-none");
-		$(".btn_hide_dropdown").addClass("d-none");
-	})
+	$(".ds_datsanDanhSachThanhToan").html(html);
 
 	$('.btnAllDelete').click(function () {
 		$('.choose').each(function () {
@@ -406,8 +392,8 @@ function veTableDatSanDanhSachThanhToan(data) {
 
 function veTableDatSanDanhSachHuy(data) {
 	var html = "";
-	html += "<div style='background-color: #d1dcde'><b>DANH SÁCH HỦY SÂN (" + data.length + ")<button class='btn mx-3 dropdown_table'><i class='far fa-caret-square-down'></i></button><button class='btn btn_hide_dropdown d-none mx-3 '><i class='far fa-caret-square-down'></i></button></b></div>"
-	html += "<table class='mytable mytable_huysan d-none' style='width:100%; text-align: center' >";
+	html += "<div style='background-color: #d1dcde'><b>DANH SÁCH HỦY SÂN (" + data.length + ")</b></div>"
+	html += "<table class='mytable mytable_huysan' style='width:100%; text-align: center' >";
 	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th>Yêu cầu hủy đặt sân</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
@@ -460,18 +446,6 @@ function veTableDatSanDanhSachHuy(data) {
 
 	html += "</table>";
 	$(".ds_datsanDanhSachHuy").html(html);
-
-	$('.dropdown_table').click(function () {
-		$(".mytable_huysan").removeClass("d-none");
-		$(".btn_hide_dropdown").removeClass("d-none");
-		$(".dropdown_table").addClass("d-none");
-	})
-
-	$('.btn_hide_dropdown').click(function () {
-		$(".mytable_huysan").addClass("d-none");
-		$(".dropdown_table").removeClass("d-none");
-		$(".btn_hide_dropdown").addClass("d-none");
-	})
 
 	$('.btnAllDelete').click(function () {
 		$('.choose').each(function () {
@@ -504,7 +478,7 @@ function veTableDatSanDanhSachHuy(data) {
 function veTableDatSanIndex(data) {
 	var html = "";
 	html += "<table class='mytable' style='width:100%; text-align: center' >";
-	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th>Yêu cầu hủy đặt sân</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
+	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
 	var chua_thanh_toan = 0;
@@ -543,13 +517,12 @@ function veTableDatSanIndex(data) {
 			html += "<td style='font-weight:bold;color:red;'>" + formatMoney(money) + "</td>";
 		}
 		if (thanh_toan == "0") {
-			html += "<td><center><button class='btnThanhToan btn btn-light border border-dark' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-check text-success'></i></button>";
+			html += "<td><center><button class='btnThanhToan_index btn btn-light border border-dark' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-check text-success'></i></button>";
 		} else {
-			html += "<td><center><button disabled class='btnThanhToan btn btn-light border border-dark' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-check text-success'></i></button>";
+			html += "<td><center><button disabled class='btnThanhToan_index btn btn-light border border-dark' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-check text-success'></i></button>";
 		}
 		
 		html += "<button class='btnXoaDatSanDanhSachHuy btn btn-light border border-dark' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-times text-danger'></i></button></center></td>";
-		html += "<td><center><span>" + data[i].note + "</span></center></td>";
 		html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
 		html += "</tr>";
 	}
@@ -607,11 +580,11 @@ function veTableDatSanIndex(data) {
 	})
 
 	
-	$(".btnThanhToan").click(function() {
+	$(".btnThanhToan_index").click(function() {
 		var xac_nhan = confirm("Thanh toán đặt sân?");
 		if (xac_nhan) {
 			var datsan_id = $(this).attr("datsan_id");
-			thanhToanDatSan(datsan_id,);
+			thanhToanDatSan_index(datsan_id,);
 		}
 	});
 	
@@ -901,12 +874,27 @@ function thanhToanDatSan(datsan_id) {
 			datsan_id: datsan_id
 		},
 		success: function(msg) {
-			if (g_bat_dau == "" && g_ket_thuc == "") {
+			
 				xemDsDatSan(getCurrentFormattedDate());
 				tailaitrang();
-			} else {
-				xemDoanhThu(g_bat_dau, g_ket_thuc);
-			}
+			
+		}
+	});
+}
+
+function thanhToanDatSan_index(datsan_id) {
+	$.ajax({
+		url: "/quanlysanbong/api/thanhtoandatsan.php",
+		type: "POST",
+		cache: false,
+		data: {
+			datsan_id: datsan_id
+		},
+		success: function(msg) {
+			
+				xemDsDatSanIndex(getCurrentFormattedDate());
+				tailaitrang();
+			
 		}
 	});
 }
