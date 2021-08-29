@@ -19,18 +19,19 @@
         <div class='ds_datsanIndex' style="background-color:white;"></div>
         <br />
         <br />
-
-        <div class='ds_datsanDanhSachHuy' style="background-color:white;"></div>
-        <br />
-        <br />
+        
+        <div class='ds_datsanDanhSachHuy mb-2' style="background-color:white;"></div>
 
         <div class='ds_datsanDanhSachThanhToan' style="background-color:white;"></div>
         <br />
         <br />
 
-        <b>TÌNH TRẠNG ĐẶT SÂN NGÀY <span class='tieudetimeIndex'></span></b><br /><br />
+        <div class='time_table_body'>
+            <b>TÌNH TRẠNG ĐẶT SÂN NGÀY <span class='tieudetimeIndex'></span></b><br /><br />
 
-        <div class="time_table" style="background-color:white;"></div> <br />
+            <div class="time_table" style="background-color:white;"></div><br />
+        </div>
+
 </section>
 
 <div id='' style="display: flex;flex-direction: row;justify-content:flex-start">
@@ -82,7 +83,7 @@ body{
 #formDatSan {
 	position:absolute;
 	margin:auto;
-	top:0;
+	top:650px;
 	right:0;
 	bottom:0;
 	left:0;

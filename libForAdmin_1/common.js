@@ -303,28 +303,6 @@ function xemDsThanhToan(day) {
 	});
 }
 
-function xemDsThanhToanBtn(day) {
-	//console.log("day=" + day);
-	resetTables();
-	$.ajax({
-		url: "/quanlysanbong/api/xemdatsan.php",
-		type: "GET",
-		cache: false,
-		data: {
-			action: "xemthanhtoan",
-			day: day
-		},
-		success: function(json) {
-			console.log(json);
-			var data = $.parseJSON(json);
-			veTableDatSanDanhSachThanhToanBtn(data);
-		},
-		error: function() {
-			alert("Khong the lay du lieu dat san!!!");
-		}
-	});
-}
-
 function xemDoanhThu(start, end) {
 	$.ajax({
 		url: "/quanlysanbong/api/xemdatsan.php",
@@ -348,8 +326,8 @@ function xemDoanhThu(start, end) {
 
 function veTableDatSanDanhSachThanhToan(data) {
 	var html = "";
-	html += "<div style='background-color: #d1dcde'><b>DANH SÁCH THANH TOÁN (" + data.length + ")</b></div>"
-	html += "<table class='mytable mytable_huysan ' style='width:100%; text-align: center' >";
+	html += "<div style='background-color: #d1dcde'><b>DANH SÁCH ĐÃ THANH TOÁN <span class='text-success'>(" + data.length + ")</span></b><button class='btn btn-show'><i class='fas fa-caret-square-down'></i></button><button class='btn btn-hide d-none'><i class='fas fa-caret-square-up'></i></button></div>"
+	html += "<table class='mytable mytable_thanhtoan d-none ' style='width:100%; text-align: center' >";
 	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
@@ -407,6 +385,22 @@ function veTableDatSanDanhSachThanhToan(data) {
 	html += "</table>";
 	$(".ds_datsanDanhSachThanhToan").html(html);
 
+	$('.btn-show').click(function(){
+		$('.mytable_thanhtoan').removeClass('d-none');
+		$('.btn-hide').removeClass('d-none');
+		$('.btn-show').addClass('d-none');
+		$('.time_table_body').addClass('d-none');
+		$('.ds_datsanDanhSachHuy').addClass('d-none');
+	})
+
+	$('.btn-hide').click(function(){
+		$('.mytable_thanhtoan').addClass('d-none');
+		$('.btn-hide').addClass('d-none');
+		$('.btn-show').removeClass('d-none');
+		$('.time_table_body').removeClass('d-none');	
+		$('.ds_datsanDanhSachHuy').removeClass('d-none');
+	})
+
 	$('.btnAllDelete').click(function () {
 		$('.choose').each(function () {
 			if ($(this).prop("checked") == true) {
@@ -437,8 +431,8 @@ function veTableDatSanDanhSachThanhToan(data) {
 
 function veTableDatSanDanhSachHuy(data) {
 	var html = "";
-	html += "<div style='background-color: #d1dcde'><b>DANH SÁCH HỦY SÂN (" + data.length + ")</b></div>"
-	html += "<table class='mytable mytable_huysan' style='width:100%; text-align: center' >";
+	html += "<div style='background-color: #d1dcde'><b>DANH SÁCH ĐANG YÊU CẦU HỦY SÂN <span class='text-danger'>(" + data.length + ")</span></b><button class='btn btn-show-huysan'><i class='fas fa-caret-square-down'></i></button><button class='btn btn-hide-huysan d-none'><i class='fas fa-caret-square-up'></i></button></div>"
+	html += "<table class='mytable mytable_huysan d-none' style='width:100%; text-align: center' >";
 	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th>Yêu cầu hủy đặt sân</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
@@ -491,6 +485,22 @@ function veTableDatSanDanhSachHuy(data) {
 
 	html += "</table>";
 	$(".ds_datsanDanhSachHuy").html(html);
+
+	$('.btn-show-huysan').click(function(){
+		$('.mytable_huysan').removeClass('d-none');
+		$('.btn-hide-huysan').removeClass('d-none');
+		$('.btn-show-huysan').addClass('d-none');
+		$('.time_table_body').addClass('d-none');
+		$('.ds_datsanDanhSachThanhToan').addClass('d-none');
+	})
+
+	$('.btn-hide-huysan').click(function(){
+		$('.mytable_huysan').addClass('d-none');
+		$('.btn-hide-huysan').addClass('d-none');
+		$('.btn-show-huysan').removeClass('d-none');
+		$('.time_table_body').removeClass('d-none');
+		$('.ds_datsanDanhSachThanhToan').removeClass('d-none');
+	})
 
 	$('.btnAllDelete').click(function () {
 		$('.choose').each(function () {
