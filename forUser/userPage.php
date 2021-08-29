@@ -255,6 +255,7 @@
                 maxYear: parseInt(moment().format('YYYY'), 10)
             }, function(start, end, label) {
                 xemDsDatSan(start.format("YYYY-MM-DD"));
+                xemDsDatSan_2(start.format("YYYY-MM-DD"));
             });
             
             
