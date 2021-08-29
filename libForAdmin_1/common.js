@@ -210,7 +210,32 @@ function xemDsDatSan(day) {
 	});
 }
 
+
+
 function xemDsDatSanIndex(day) {
+	//console.log("day=" + day);
+	resetTables();
+	$.ajax({
+		url: "/quanlysanbong/api/xemdatsan.php",
+		type: "GET",
+		cache: false,
+		data: {
+			action: "xemdatsan_1",
+			day: day
+		},
+		success: function(json) {
+			console.log(json);
+			$(".tieudetimeIndex").html(getCurrentFormattedDate());
+			checkInputs();
+			veTimeTable(json);
+		},
+		error: function() {
+			alert("Khong the lay du lieu dat san!!!");
+		}
+	});
+}
+
+function xemDsDatSanIndex_1(day) {
 	//console.log("day=" + day);
 	resetTables();
 	$.ajax({
@@ -225,10 +250,8 @@ function xemDsDatSanIndex(day) {
 			console.log(json);
 			var data = $.parseJSON(json);
 			$(".tieudedsIndex").html(getCurrentFormattedDate());
-			$(".tieudetimeIndex").html(getCurrentFormattedDate());
 			veTableDatSanIndex(data);
 			checkInputs();
-			veTimeTable(json);
 		},
 		error: function() {
 			alert("Khong the lay du lieu dat san!!!");
@@ -273,6 +296,28 @@ function xemDsThanhToan(day) {
 			console.log(json);
 			var data = $.parseJSON(json);
 			veTableDatSanDanhSachThanhToan(data);
+		},
+		error: function() {
+			alert("Khong the lay du lieu dat san!!!");
+		}
+	});
+}
+
+function xemDsThanhToanBtn(day) {
+	//console.log("day=" + day);
+	resetTables();
+	$.ajax({
+		url: "/quanlysanbong/api/xemdatsan.php",
+		type: "GET",
+		cache: false,
+		data: {
+			action: "xemthanhtoan",
+			day: day
+		},
+		success: function(json) {
+			console.log(json);
+			var data = $.parseJSON(json);
+			veTableDatSanDanhSachThanhToanBtn(data);
 		},
 		error: function() {
 			alert("Khong the lay du lieu dat san!!!");

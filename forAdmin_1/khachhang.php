@@ -41,7 +41,13 @@ body {
 </div>
 
 <div id='hold'>
-	
+	<h1>Danh sách khách hàng</h1>
+	<div class="ml-3">
+		
+		<p>
+			<b>Trạng thái: (x : số lần hủy sân)</b><i class="fas fa-circle text-success pl-4"></i> x < 3 <i class="fas fa-circle text-warning pl-4 "></i> 3 <= x <= 4 <i class="fas fa-circle text-danger pl-4 "></i> x > 4
+		</p>
+	</div>
 	<div id='tblKhachHang'></div>
 </div>
 
@@ -63,12 +69,6 @@ body {
 				success: function(json) {
 					let data = $.parseJSON(json);
 					let html = "";
-					html += "<h1>Danh sách khách hàng</h1>";
-					html += "<table class='chiTiet  mb-3 mx-2 table'>";
-					html += "<tr><th>(*)</th><th><center class='bg-danger text-light'>Đỏ</center></th><th><center class='bg-warning text-light'>Cam</center></th><th><center class='bg-success text-light'>Xanh lá</center></th><th><center class='bg-primary text-light'>Xanh Dương</center></th><th><center class='bg-dark text-light'>Đen</center></th></tr>";
-					html += "<tr><td>Admin:</td><td></td><td></td><td><center>Quản lý</center></td><td><center>Nhân viên</center></td><td><center>Khách hàng</center></td></tr> ";
-  					html += "<tr><td>Trạng thái (số lần hủy sân):</td><td><center>  x > = 4</center></td><td><center> 3 <= x <= 4 </center></td><td><center> x < 3 </center></td><td><center></center></td><td><center></center></td></tr>";
-					html += "</table>";
 					html += "<table class='mytable' style='width: 100%;text-align: center;background-color:white;'>";
 					html += "<thead><tr><th>STT</th><th>Tên khách hàng</th><th>Username</th><th>Số điện thoại</th><th>Email</th><th>Admin(*)</th><th>Trạng thái</th><th>Công cụ</th></tr></thead>";
 					for (let i = 0; i < data.length; i++) {
@@ -84,12 +84,15 @@ body {
 						}
 
 
-						if(data[i].soLanHuySan < 3){
-							html += "<td> <i class='fas fa-smile text-success'></i> </td>"  ;
-						} else if (data[i].soLanHuy >= 3 && data[i].soLanHuy <= 4) {
-							html += "<td> <i class='fas fa-angry text-warning'></i> </td>";
-						} else {
-							html += "<td> <i class='fas fa-angry text-danger'></i> </td>";
+						var soLanHuySan = data[i].soLanHuySan;
+						if(soLanHuySan < 3){
+							html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-smile text-success'></i></td>";
+						} else if (soLanHuySan == 3) {
+							html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-warning'></i></td>";
+						}else if (soLanHuySan == 4) {	
+							html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-warning'></i></td>";
+						} else if (soLanHuySan == 5){
+							html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-danger'></i></td>";
 						}
 
 						html += "<td><center><button class='btn-changing btn' username='" + data[i].username +"' title='Thay đổi trạng thái khách hàng' ><i class='fas fa-exchange-alt'></i></button><button class='btn-edit btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "' title='Chỉnh sửa' ><i class='fas fa-edit'></i></button>"+ 

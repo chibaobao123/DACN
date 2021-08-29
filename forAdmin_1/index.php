@@ -233,6 +233,7 @@ body{
         $(document).ready(function() {
             
             xemDsDatSanIndex(getToday());
+            xemDsDatSanIndex_1(getToday());
             xemDsHuySan(getToday());
             xemDsThanhToan(getToday());
 
@@ -290,9 +291,10 @@ body{
                 
                 var date = new Date();
                 var hoursNow = date.getHours();
-                var hoursNow = date.getminutes();
-                var checkHours = bat_dau_gio - hoursNow;
-                var checkHours = bat_dau_phut - minutesNow;
+                var minutesNow = date.getMinutes();
+                var checkHours = parseInt(bat_dau_gio) - hoursNow;
+                var checkMinutes = parseInt(minutesNow) - parseInt(bat_dau_phut);
+                console.log(checkHours,parseInt(bat_dau_phut), minutesNow, bat_dau_gio, bat_dau_phut)
 
                 var ngayPresent = date.getDate();
                 var thangPresent = date.getMonth();
@@ -313,14 +315,14 @@ body{
                     thongbaoloi("Đã quá thời gian đặt sân!!! ");
                 } else if (checkHours < 0 ) {
                     thongbaoloi("Đã quá thời gian đặt sân!!!")
-                }else if (checkHours < 0  && checkMinutes > 30) {
+                }else if (checkHours == 0  && checkMinutes > 30) {
                     thongbaoloi("Đã quá thời gian đặt sân!!!")
-                } else if(checkHours == 0 && checkMinutes < 30 ) {
+                } else if(checkHours >= 0 || chheckHours == 0 && checkMinutes <= 30 ) {
                     taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san);
                     $("#formDatSan").css("display","none");
                     $("#grayscreen").css("display","none");
                 }else{
-                    thongbaoloi("Lỗi hệ thống");
+                    thongbaoloi("Thời gian không hợp lệ!!!");
                 }
 
 
