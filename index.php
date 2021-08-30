@@ -10,34 +10,39 @@
             <input type="text" class="datsan_ngaydat" style="text-align:center;align-self:center;height:30px;"/><br/>
         </div>
 
-        <div >
-            <b>DANH SÁCH ĐẶT SÂN NGÀY <span class='tieudedsIndex'></span></b>	
-        </div>
-	
-        <br />
-        <br />
-
-        <div class='ds_datsanIndex' style="background-color:white;"></div>
-        <br />
-        <br />
-
-        <div class='ds_datsanDanhSachHuy' style="background-color:white;"></div>
-        <br />
-        <br />
-
-        <div class='ds_datsanDanhSachThanhToan' style="background-color:white;"></div>
-        <br />
-        <br />
         <div class='time_table_body'>
             <b>TÌNH TRẠNG ĐẶT SÂN NGÀY <span class='tieudetimeIndex'></span></b><br /><br />
 
-            <div class="time_table" style="background-color:white;"></div> <br />
+            <div class="time_table" style="background-color:white;"></div><br />
         </div>
-</section>
 
-<div id='' style="display: flex;flex-direction: row;justify-content:flex-start">
-	<img src='./picture/sodosanbong.png' style="width: 750px;height: 350px;"/>
-	<div style="margin-left:30px;">
+        <div class='row'>
+            <div class='col-4 text-center'>
+                <p class="content_datsan border-bottom border-dark mx-3" ><span class='tieudedsIndex'></span></p>	
+            </div>
+            <div class='col-4 text-center'>
+                <p class="content_huysan"></p>	
+            </div> 
+            <div class='col-4 text-center'>
+                <p class="content_thanhtoan" ></p>	
+            </div>     
+        </div>
+	
+        <br />
+
+        <div class='ds_datsanIndex tabcontent' id='datsan' style="background-color:white;"></div>
+       
+        
+        <div class='ds_datsanDanhSachHuy tabcontent' id='huysan' style="background-color:white;"></div>
+
+        <div class='ds_datsanDanhSachThanhToan tabcontent' id='thanhtoan' style="background-color:white;"></div>
+</section>
+<br/>
+<br/>
+<br/>
+<div class='border-top border-dark' style="display: flex;flex-direction: row;justify-content:flex-start">
+	<img src='./picture/sodosanbong.png' class='py-5' style="width: 750px;height: 350px;"/>
+	<div style="margin-left:30px;" class='py-5'>
 		<h2 style="padding:0;margin:0;"> Thông tin sân bóng:</h2>
 		<div style="margin-left:30px; text-align:center; padding: 5px 0 10px 0;	">
 			<p><i>sân A:</i> Sân bóng đá cỏ nhân tạo <b>7</b> người.(40m x 70m)</p>
@@ -241,6 +246,13 @@ body{
             xemDsHuySan(getToday());
             xemDsThanhToan(getToday());
 
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            document.getElementById("datsan").style.display = "block";
+
             $('.datsan_ngaydat').daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
@@ -296,7 +308,7 @@ body{
                 var bat_dau = ngay_dat + " " + bat_dau_gio + ":" + bat_dau_phut + ":" + "00";
                 var ket_thuc = ngay_dat + " " + ket_thuc_gio + ":" + ket_thuc_phut + ":" + "00";
                 
-                r hoursNow = date.getHours();
+                var hoursNow = date.getHours();
                 var minutesNow = date.getMinutes();
                 var checkHours = parseInt(bat_dau_gio) - hoursNow;
                 var checkMinutes = parseInt(minutesNow) - parseInt(bat_dau_phut);
