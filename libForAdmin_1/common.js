@@ -328,7 +328,7 @@ function veTableDatSanDanhSachThanhToan(data) {
 	var html = "";
 	html_content = "<div style='background-color: #d1dcde'><b>DANH SÁCH ĐÃ THANH TOÁN <span class='text-success'>(" + data.length + ")</span></b><button class='btn btn-show-thanhtoan'><i class='fas fa-caret-square-down'></i></button><button class='btn btn-hide-thanhtoan d-none'><i class='fas fa-caret-square-up'></i></button></div>"
 	html += "<table class='mytable mytable_thanhtoan ' style='width:100%; text-align: center' >";
-	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
+	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
 	var chua_thanh_toan = 0;
