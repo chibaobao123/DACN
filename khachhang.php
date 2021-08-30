@@ -43,7 +43,7 @@
 		<div style='font-size:12px;'>
 			<div class="ml-3 col">
 				<p>
-					<b>(*)Admin:</b><i class="fas fa-circle text-success pl-4"></i> Quản trị <i class="fas fa-circle text-info pl-4 "></i> Nhân viên <i class="fas fa-circle text-dark pl-4 "></i> Khách Hàng
+					<b>Chức vụ:</b><i class="fas fa-circle text-success pl-4"></i> Quản trị <i class="fas fa-circle text-info pl-4 "></i> Nhân viên <i class="fas fa-circle text-dark pl-4 "></i> Khách Hàng
 				</p>
 			</div>
 			<div class="ml-3 col">
@@ -74,7 +74,7 @@
 						let data = $.parseJSON(json);
 						let html = "";
 						html += "<table class='mytable' style='width: 100%;text-align: center;background-color:white;'>";
-						html += "<thead><tr><th>STT</th><th>Tên khách hàng</th><th>Username</th><th>Số điện thoại</th><th>Email</th><th>Admin(*)</th><th>Trạng thái</th><th>Công cụ</th></tr></thead>";
+						html += "<thead><tr><th>STT</th><th>Tên khách hàng</th><th>Username</th><th>Số điện thoại</th><th>Email</th><th>Chức vụ</th><th>Trạng thái</th><th>Công cụ</th></tr></thead>";
 						for (let i = 0; i < data.length; i++) {
 							html += "<tr>";
 							html += "<td>"+(i+1)+"</td><td>" + data[i].ten + "</td><td class='username'>" + data[i].username + "</td><td>" + data[i].sdt + "</td><td>" + data[i].email + "</td>";

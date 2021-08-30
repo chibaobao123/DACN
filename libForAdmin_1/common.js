@@ -749,9 +749,9 @@ function veTableDatSan(data) {
 	}
 
 
-	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Đã thanh toán</b></td><td style='font-weight:bold;color:green;'>" + formatMoney(da_thanh_toan) + "</td><td></td><td></td><td></td></tr>";
-	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Chưa thanh toán</b></td><td style='font-weight:bold;color:red;'>" + formatMoney(chua_thanh_toan) + "</td><td></td><td></td><td></td></tr>";
-	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Tổng tiền</b></td><td style='font-weight:bold;color:blue;'>" + formatMoney(tong_tien) + "</td><td></td><td></td><td></td></tr>";
+	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Đã thanh toán</b></td><td style='font-weight:bold;color:green;'>" + formatMoney(da_thanh_toan) + "</td><td></td><td></td><td></td><td></td></tr>";
+	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Chưa thanh toán</b></td><td style='font-weight:bold;color:red;'>" + formatMoney(chua_thanh_toan) + "</td><td></td><td></td><td></td><td></td></tr>";
+	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Tổng tiền</b></td><td style='font-weight:bold;color:blue;'>" + formatMoney(tong_tien) + "</td><td></td><td></td><td></td><td></td></tr>";
 	html += "</table>";
 	$(".ds_datsan").html(html);
 
@@ -791,10 +791,13 @@ function veTableDatSan(data) {
 		
 				if( checkNgay < 0 || checkThang < 0 || checkNam < 0) {
 					thongbaoloi("Đã quá thời gian hủy đặt sân!!! ");
+					return false;
 				} else if (checkHours <= 0 ) {
-					thongbaoloi("Đã quá thời gian hủy đặt sân!!!")
+					thongbaoloi("Đã quá thời gian hủy đặt sân!!!");
+					return false;
 				} else if(checkHours <=2) {
 					thongbaoloi("Bạn chỉ được hủy đặt sân cách giờ đặt 2 tiếng !!!");
+					return false;
 				} else {
 					xoaDatSanIndex(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc);
 				}
