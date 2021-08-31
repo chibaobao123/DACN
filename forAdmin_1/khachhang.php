@@ -64,7 +64,7 @@ body {
 				type: "GET",
 				cache: false,
 				data: {
-					action: "view",
+					action: "view_nhanvien",
 				},
 				success: function(json) {
 					let data = $.parseJSON(json);
@@ -117,7 +117,7 @@ body {
 							success: function(msg) {
 								if(msg == 'Thành công'){
 									thongbaotot(msg);
-									tailaitrang();
+									taoDsKhachHang();
 								} else {
 									thongbaoloi(msg);
 								}
@@ -278,7 +278,7 @@ body {
 			},
 			success: function(msg) {
 				thongbaotot(msg);
-				tailaitrang();
+				taoDsKhachHang();
 				console.log(msg);
 			}
 		});
@@ -301,11 +301,11 @@ body {
 					console.log(msg);
 					if (msg.includes("đã tồn tại")) {
 						thongbaoloi(msg);
-						tailaitrang();
+						taoDsKhachHang();
 						console.log(msg);
 					} else {
 						thongbaotot(msg);
-						tailaitrang();
+						taoDsKhachHang();
 						console.log(msg);
 					}
 				},

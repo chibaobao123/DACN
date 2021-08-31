@@ -2,7 +2,26 @@
 	include("../config/config.php");
 	
 	if (isset($_GET['action']) && $_GET['action'] == 'view') {
-		$sql = "SELECT * FROM khach_hang ORDER BY ten";
+		$sql = "SELECT * FROM khach_hang  ORDER BY ten";
+		$rs = mysqli_query($db, $sql);
+		$json_response = array();
+		
+		while($row = mysqli_fetch_row($rs)) {
+			$r['id'] = $row['0'];
+			$r['ten'] = $row['1'];
+			$r['sdt'] = $row['2'];
+			$r['email'] = $row['3'];
+			$r['username'] = $row['4'];
+			$r['admin_number'] = $row['5'];
+			$r['soLanHuySan'] = $row['6'];
+			array_push($json_response, $r);
+		}
+		
+		echo json_encode($json_response);
+	}
+
+	if (isset($_GET['action']) && $_GET['action'] == 'view_nhanvien') {
+		$sql = "SELECT * FROM khach_hang WHERE admin_number = '0' ORDER BY ten";
 		$rs = mysqli_query($db, $sql);
 		$json_response = array();
 		

@@ -266,7 +266,7 @@ body{
             });
             
             
-            function taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san) {
+            function taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien) {
                 $.ajax({
                     url: "/quanlysanbong/api/taodatsan.php",
                     type: "POST",
@@ -278,6 +278,7 @@ body{
                         ket_thuc : ket_thuc,
                         don_gia : don_gia,
                         ten_san : ten_san,
+                        tong_tien : tong_tien,
                     },
                     success: function(msg) {
                         if (msg.includes("trùng")) {
@@ -286,7 +287,11 @@ body{
                             thongbaotot(msg);
                         }
                         console.log(msg);
-                        xemDsDatSanIndex(getCurrentFormattedDate());
+                        var thoiGianthuc = $('.tieudetimeIndex').text();
+                        xemDsDatSanIndex(thoiGianthuc);
+                        xemDsDatSanIndex_1(thoiGianthuc);
+                        xemDsHuySan(thoiGianthuc);
+                        xemDsThanhToan(thoiGianthuc);
                     },
                     error: function() {
                         thongbaoloi("Lỗi hệ thống!!");
@@ -299,7 +304,8 @@ body{
                 var ma_kh = $("#datsan_kh").val();
                 var ma_san = $("#datsan_tensan").attr("ma_san");
                 var ten_san = $("#datsan_tensan").text();
-                var don_gia = parseInt($("#datsan_dongia").text());
+                var don_gia = parseInt($("#datsan_dongia").text());              
+                var tong_tien =$("#datsan_tongtien").text();
                 var ngay_dat = $(".datsan_ngaydat").text();
                 var bat_dau_gio = $("#datsan_batdau_gio").val();
                 var bat_dau_phut = $("#datsan_batdau_phut").val();
@@ -307,6 +313,8 @@ body{
                 var ket_thuc_phut = $("#datsan_ketthuc_phut").val();
                 var bat_dau = ngay_dat + " " + bat_dau_gio + ":" + bat_dau_phut + ":" + "00";
                 var ket_thuc = ngay_dat + " " + ket_thuc_gio + ":" + ket_thuc_phut + ":" + "00";
+
+                var date = new Date();
                 
                 var hoursNow = date.getHours();
                 var minutesNow = date.getMinutes();
@@ -329,19 +337,24 @@ body{
                     $("#datsan_dongia").val("0");
                 }
                 
-                if( checkNgay < 0 || checkThang < 0 || checkNam < 0) {
+                if( checkNgay < 0 && checkThang < 0 && checkNam < 0) {
                     thongbaoloi("Đã quá thời gian đặt sân!!! ");
-                } else if (checkHours < 0 ) {
+                } else if (checkNgay > 0 || checkThang > 0 || checkNam > 0 ) {
+                    taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien);
+                    $("#formDatSan").css("display","none");
+                    $("#grayscreen").css("display","none");
+                }else if (checkNgay == 0 && checkThang == 0 && checkNam == 0 && checkHours < 0 ) {
                     thongbaoloi("Đã quá thời gian đặt sân!!!")
                 }else if (checkHours == 0  && checkMinutes > 30) {
                     thongbaoloi("Đã quá thời gian đặt sân!!!")
-                } else if(checkHours >= 0 || chheckHours == 0 && checkMinutes <= 30 ) {
-                    taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san);
+                } else if(checkHours >= 0 || checkHours == 0 && checkMinutes <= 30) {
+                    taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien);
                     $("#formDatSan").css("display","none");
                     $("#grayscreen").css("display","none");
                 }else{
                     thongbaoloi("Thời gian không hợp lệ!!!");
                 }
+
             });
             
             $("#datsan_cancel").click(function() {

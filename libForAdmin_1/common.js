@@ -378,7 +378,7 @@ function veTableDatSanDanhSachThanhToan(data) {
 		html += "<button class='disabled btnXoaDatSanDanhSachThanhToan btn btn-light border border-dark' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-times text-danger'></i></button></center></td>";
 
 		}
-		html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
+		// html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
 		html += "</tr>";
 	}
 
@@ -395,20 +395,20 @@ function veTableDatSanDanhSachThanhToan(data) {
 	})
 
 
-	$('.btnAllDelete').click(function () {
-		$('.choose').each(function () {
-			if ($(this).prop("checked") == true) {
-				let ten_kh = $(this).attr("ten_kh");
-				let sdt = $(this).attr("sdt");
-				let ten_san = $(this).attr("ten_san");
-				let bat_dau = $(this).attr("bat_dau");
-				let ket_thuc = $(this).attr("ket_thuc");
-				let datsan_id = $(this).attr("datsan_id");
-				xoaDatSanIndex(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc);
-			}
+	// $('.btnAllDelete').click(function () {
+	// 	$('.choose').each(function () {
+	// 		if ($(this).prop("checked") == true) {
+	// 			let ten_kh = $(this).attr("ten_kh");
+	// 			let sdt = $(this).attr("sdt");
+	// 			let ten_san = $(this).attr("ten_san");
+	// 			let bat_dau = $(this).attr("bat_dau");
+	// 			let ket_thuc = $(this).attr("ket_thuc");
+	// 			let datsan_id = $(this).attr("datsan_id");
+	// 			xoaDatSanIndex(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc);
+	// 		}
 
-		})
-	})
+	// 	})
+	// })
 
 	$(".btnXoaDatSanDanhSachThanhToan").click(function () {
 		let ten_kh = $(this).attr("ten_kh");
@@ -521,7 +521,7 @@ function veTableDatSanIndex(data) {
 	var html = "";
 	html_content = "<div style='background-color: #d1dcde'><b>DANH SÁCH ĐẶT SÂN <span class='text-info'>(" + data.length + ")</span></b><button class='btn btn-show-index' ><i class='fas fa-caret-square-down'></i></button><button class='btn btn-hide-index d-none'><i class='fas fa-caret-square-up'></i></button></div>";
 	html += "<table class='mytable mytable_index' style='width:100%; text-align: center' >";
-	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></thead>";
+	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>Thanh toán</th></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
 	var chua_thanh_toan = 0;
@@ -566,7 +566,7 @@ function veTableDatSanIndex(data) {
 		}
 		
 		html += "<button class='btnXoaDatSanDanhSachHuy btn btn-light border border-dark' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-times text-danger'></i></button></center></td>";
-		html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
+		// html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
 		html += "</tr>";
 	}
 	
@@ -584,54 +584,61 @@ function veTableDatSanIndex(data) {
 	})
 
 
-	$('.btnAllDelete').click(function() {
-		$('.choose').each(function() {
-			if($(this). prop("checked") == true){
-				var ten_kh = $(this).attr("ten_kh");
-				var sdt = $(this).attr("sdt");
-				var ten_san = $(this).attr("ten_san");
-				var bat_dau = $(this).attr("bat_dau");
-				var ket_thuc = $(this).attr("ket_thuc");
+	// $('.btnAllDelete_index').click(function() {
+	// 	$('.choose').each(function() {
+	// 		var ten_kh = $(this).attr("ten_kh");
+	// 			var sdt = $(this).attr("sdt");
+	// 			var ten_san = $(this).attr("ten_san");
+	// 			var bat_dau = $(this).attr("bat_dau");
+	// 			var ket_thuc = $(this).attr("ket_thuc");
 				
-				var date = new Date();
-				var hoursNow = date.getHours();
+	// 			var date = new Date();
+	// 			var hoursNow = date.getHours();
 		
-				var ngayPresent = date.getDate();
-				var thangPresent = date.getMonth();
-				var namPresent = date.getFullYear();
+	// 			var ngayPresent = date.getDate();
+	// 			var thangPresent = date.getMonth();
+	// 			var namPresent = date.getFullYear();
 				
-				var datsan_id = $(this).attr("datsan_id");
-				var bat_dau = $(this).attr("bat_dau");
+	// 			var datsan_id = $(this).attr("datsan_id");
+	// 			var bat_dau = $(this).attr("bat_dau");
 		
-				var dateBatDau = bat_dau.split(" ");
-				var ngayThangNam = dateBatDau[0].split("-");
-				var giobatdau = dateBatDau[1].split(":");
+	// 			var dateBatDau = bat_dau.split(" ");
+	// 			var ngayThangNam = dateBatDau[0].split("-");
+	// 			var giobatdau = dateBatDau[1].split(":");
 		
-				var gio = giobatdau[0];
-				var ngay = ngayThangNam[2];
-				var thang = ngayThangNam[1];
-				var nam = ngayThangNam[0];
+	// 			var gio = giobatdau[0];
+	// 			var ngay = ngayThangNam[2];
+	// 			var thang = ngayThangNam[1];
+	// 			var nam = ngayThangNam[0];
 		
-				var checkHours = gio - hoursNow;
+	// 			var checkHours = gio - hoursNow;
 		
-				var checkNgay = ngay - ngayPresent;
-				var checkThang = parseInt(thang) - 1 - thangPresent;
-				var checkNam = nam - namPresent;
-		
-				if( checkNgay < 0 || checkThang < 0 || checkNam < 0) {
-					thongbaoloi("Đã quá thời gian hủy đặt sân!!! ");
-				} else if (checkHours <= 0 ) {
-					thongbaoloi("Đã quá thời gian hủy đặt sân!!!")
-				} else if(checkHours <=2) {
-					thongbaoloi("Bạn chỉ được hủy đặt sân cách giờ đặt 2 tiếng !!!");
-				} else {
-					xoaDatSanIndex(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc);
-				}
-			}
+	// 			var checkNgay = ngay - ngayPresent;
+	// 			var checkThang = parseInt(thang) - 1 - thangPresent;
+	// 			var checkNam = nam - namPresent;
 
-		})
-	})
+	// 			console.log(checkHours )
+			
+		
+	// 			if( checkNgay < 0 || checkThang < 0 || checkNam < 0) {
+	// 				thongbaoloi("Đã quá thời gian hủy đặt sân!!! ");
+	// 				$('.btnAllDelete_index').stop();
+	// 			} else if (checkHours <= 0 ) {
+	// 				thongbaoloi("Đã quá thời gian hủy đặt sân!!!");
+	// 				$('.btnAllDelete_index').stop();
+	// 			} else if(checkHours < 2) {
+	// 				thongbaoloi("Bạn chỉ được hủy đặt sân cách giờ đặt 2 tiếng !!!");
+	// 				$('.btnAllDelete_index').stop();
+	// 			} else if (checkHours >= 2){
+	// 				// if($(this). prop("checked") == true){
+	// 				// 	console.log(checkHours )
+	// 				// 	xoaDatSanIndex(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc);
+	// 				// }
+	// 				console.log("thành công")
+	// 			}
 
+	// 	})
+	// })
 	
 	$(".btnThanhToan_index").click(function() {
 		var xac_nhan = confirm("Thanh toán đặt sân?");
@@ -689,7 +696,7 @@ function veTableDatSanIndex(data) {
 function veTableDatSan(data) {
 	var html = "";
 	html += "<table class='mytable' style='width:100%; text-align: center;'>";
-	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>trạng thái</th><th>Thanh toán</th><th>Yêu cầu hủy đặt sân</th><th><center><button class='btn btn-light border border-dark btnAllDelete'><i class='fas fa-times text-danger'></i></button></center></th></tr></thead>";
+	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>trạng thái</th><th>Thanh toán</th><th>Yêu cầu hủy đặt sân</th></tr></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
 	var chua_thanh_toan = 0;
@@ -737,74 +744,79 @@ function veTableDatSan(data) {
 		}
 		
 		if (thanh_toan == "0"){
-			html += "<button class='btnXoaDatSanDanhSachThanhToan btn btn-light border border-dark' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-times text-danger'></i></button></center></td>";
+			html += "<button class='btnXoaDatSan  btn btn-light border border-dark' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-times text-danger'></i></button></center></td>";
 		} else {
-		html += "<button class='disabled btnXoaDatSanDanhSachThanhToan btn btn-light border border-dark' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-times text-danger'></i></button></center></td>";
+		html += "<button class='disabled btnXoaDatSan  btn btn-light border border-dark' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-times text-danger'></i></button></center></td>";
 
 		}
 		
 		html += "<td><center><span>" + data[i].note + "</span></center></td>";
-		html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
+		// html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
 		html += "</tr>";
 	}
 
 
-	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Đã thanh toán</b></td><td style='font-weight:bold;color:green;'>" + formatMoney(da_thanh_toan) + "</td><td></td><td></td><td></td><td></td></tr>";
-	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Chưa thanh toán</b></td><td style='font-weight:bold;color:red;'>" + formatMoney(chua_thanh_toan) + "</td><td></td><td></td><td></td><td></td></tr>";
-	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Tổng tiền</b></td><td style='font-weight:bold;color:blue;'>" + formatMoney(tong_tien) + "</td><td></td><td></td><td></td><td></td></tr>";
+	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Đã thanh toán</b></td><td style='font-weight:bold;color:green;'>" + formatMoney(da_thanh_toan) + "</td><td></td><td></td><td></td></tr>";
+	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Chưa thanh toán</b></td><td style='font-weight:bold;color:red;'>" + formatMoney(chua_thanh_toan) + "</td><td></td><td></td><td></td></tr>";
+	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Tổng tiền</b></td><td style='font-weight:bold;color:blue;'>" + formatMoney(tong_tien) + "</td><td></td><td></td><td></td></tr>";
 	html += "</table>";
 	$(".ds_datsan").html(html);
 
-	$('.btnAllDelete').click(function() {
-		$('.choose').each(function() {
-			if($(this). prop("checked") == true){
-				var ten_kh = $(this).attr("ten_kh");
-				var sdt = $(this).attr("sdt");
-				var ten_san = $(this).attr("ten_san");
-				var bat_dau = $(this).attr("bat_dau");
-				var ket_thuc = $(this).attr("ket_thuc");
+	// $('.btnAllDelete').click(function() {
+	// 	$('.choose').each(function() {
+	// 		var ten_kh = $(this).attr("ten_kh");
+	// 			var sdt = $(this).attr("sdt");
+	// 			var ten_san = $(this).attr("ten_san");
+	// 			var bat_dau = $(this).attr("bat_dau");
+	// 			var ket_thuc = $(this).attr("ket_thuc");
 				
-				var date = new Date();
-				var hoursNow = date.getHours();
+	// 			var date = new Date();
+	// 			var hoursNow = date.getHours();
 		
-				var ngayPresent = date.getDate();
-				var thangPresent = date.getMonth();
-				var namPresent = date.getFullYear();
+	// 			var ngayPresent = date.getDate();
+	// 			var thangPresent = date.getMonth();
+	// 			var namPresent = date.getFullYear();
 				
-				var datsan_id = $(this).attr("datsan_id");
-				var bat_dau = $(this).attr("bat_dau");
+	// 			var datsan_id = $(this).attr("datsan_id");
+	// 			var bat_dau = $(this).attr("bat_dau");
 		
-				var dateBatDau = bat_dau.split(" ");
-				var ngayThangNam = dateBatDau[0].split("-");
-				var giobatdau = dateBatDau[1].split(":");
+	// 			var dateBatDau = bat_dau.split(" ");
+	// 			var ngayThangNam = dateBatDau[0].split("-");
+	// 			var giobatdau = dateBatDau[1].split(":");
 		
-				var gio = giobatdau[0];
-				var ngay = ngayThangNam[2];
-				var thang = ngayThangNam[1];
-				var nam = ngayThangNam[0];
+	// 			var gio = giobatdau[0];
+	// 			var ngay = ngayThangNam[2];
+	// 			var thang = ngayThangNam[1];
+	// 			var nam = ngayThangNam[0];
 		
-				var checkHours = gio - hoursNow;
+	// 			var checkHours = gio - hoursNow;
 		
-				var checkNgay = ngay - ngayPresent;
-				var checkThang = parseInt(thang) - 1 - thangPresent;
-				var checkNam = nam - namPresent;
-		
-				if( checkNgay < 0 || checkThang < 0 || checkNam < 0) {
-					thongbaoloi("Đã quá thời gian hủy đặt sân!!! ");
-					return false;
-				} else if (checkHours <= 0 ) {
-					thongbaoloi("Đã quá thời gian hủy đặt sân!!!");
-					return false;
-				} else if(checkHours <=2) {
-					thongbaoloi("Bạn chỉ được hủy đặt sân cách giờ đặt 2 tiếng !!!");
-					return false;
-				} else {
-					xoaDatSanIndex(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc);
-				}
-			}
+	// 			var checkNgay = ngay - ngayPresent;
+	// 			var checkThang = parseInt(thang) - 1 - thangPresent;
+	// 			var checkNam = nam - namPresent;
 
-		})
-	})
+	// 			console.log(checkHours )
+			
+		
+	// 			if( checkNgay < 0 || checkThang < 0 || checkNam < 0) {
+	// 				thongbaoloi("Đã quá thời gian hủy đặt sân!!! ");
+	// 				stop();
+	// 			} else if (checkHours <= 0 ) {
+	// 				thongbaoloi("Đã quá thời gian hủy đặt sân!!!");
+	// 				stop();
+	// 			} else if(checkHours < 2) {
+	// 				thongbaoloi("Bạn chỉ được hủy đặt sân cách giờ đặt 2 tiếng !!!");
+	// 				stop();
+	// 			} else if (checkHours >= 2){
+	// 				if($(this). prop("checked") == true){
+	// 					console.log(checkHours )
+	// 					xoaDatSanIndex(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc);
+	// 				}
+					
+	// 			}
+
+	// 	})
+	// })
 
 	
 	$(".btnThanhToan_1").click(function() {
@@ -896,8 +908,13 @@ function xoaDatSan(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc) {
 		success: function(msg) {
 			coonsole.log(msg);
 			if (g_bat_dau == "" && g_ket_thuc == "") {
-				xemDsDatSan(getCurrentFormattedDate());
+				var thoiGianthuc = $('.tieudetimeIndex').text();
+				xemDsDatSanIndex(thoiGianthuc);
+                        xemDsDatSanIndex_1(thoiGianthuc);
+                        xemDsHuySan(thoiGianthuc);
+                        xemDsThanhToan(thoiGianthuc);
 				thongbaotot(msg);
+
 			} else {
 				xemDoanhThu(g_bat_dau, g_ket_thuc);
 			}
@@ -924,7 +941,11 @@ function xoaDatSanIndex(datsan_id, ten_kh, sdt, ten_san, bat_dau, ket_thuc) {
 		},
 		success: function(msg) {
 			if (g_bat_dau == "" && g_ket_thuc == "") {
-				xemDsDatSanIndex(getCurrentFormattedDate());
+				var thoiGianthuc = $('.tieudetimeIndex').text();
+				xemDsDatSanIndex(thoiGianthuc);
+                        xemDsDatSanIndex_1(thoiGianthuc);
+                        xemDsHuySan(thoiGianthuc);
+                        xemDsThanhToan(thoiGianthuc);
 				thongbaotot(msg);
 			} else {
 				xemDoanhThu(g_bat_dau, g_ket_thuc);
@@ -945,10 +966,11 @@ function thanhToanDatSan(datsan_id) {
 			datsan_id: datsan_id
 		},
 		success: function(msg) {
-			
-				xemDsDatSan(getCurrentFormattedDate());
-				tailaitrang();
-			
+			var thoiGianthuc = $('.tieudetimeIndex').text();
+			xemDsDatSanIndex(thoiGianthuc);
+                        xemDsDatSanIndex_1(thoiGianthuc);
+                        xemDsHuySan(thoiGianthuc);
+                        xemDsThanhToan(thoiGianthuc);
 		}
 	});
 }
@@ -962,9 +984,12 @@ function thanhToanDatSan_index(datsan_id) {
 			datsan_id: datsan_id
 		},
 		success: function(msg) {
-			
-				xemDsDatSanIndex(getCurrentFormattedDate());
-				tailaitrang();
+			var thoiGianthuc = $('.tieudetimeIndex').text();
+			xemDsDatSanIndex(thoiGianthuc);
+                        xemDsDatSanIndex_1(thoiGianthuc);
+                        xemDsHuySan(thoiGianthuc);
+                        xemDsThanhToan(thoiGianthuc);
+			console.log(thoiGianthuc);
 			
 		}
 	});
