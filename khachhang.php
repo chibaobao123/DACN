@@ -158,7 +158,8 @@
 							var admin_number = $(this).attr("admin_number");
 							var ma_kh = $(this).attr("ma_kh");
 							var username = $(this).attr("username");
-							var num 
+							var num ;
+							var resetNum = 0;
 							
 							if (admin_number == 1) {
 								num = 0;
@@ -168,7 +169,7 @@
 
 							console.log(admin_number, num, username);
 
-							changeAdminNumber(num, ma_kh, username);
+							changeAdminNumber(num, ma_kh, username, resetNum);
 						})
 						
 
@@ -331,7 +332,7 @@
 				});
 			}
 
-			function changeAdminNumber(num, ma_kh, username) {
+			function changeAdminNumber(num, ma_kh, username,resetNum) {
 				$.ajax({
 					url: "./api/changeAdminNumber.php",
 					type: "POST",
@@ -341,15 +342,16 @@
 						num: num,
 						ma_kh : ma_kh,
 						username : username,
+						resetNum : resetNum,
 					},
 					success: function(msg) {
 						console.log(msg);
 						if (msg == "Cập nhật thành công!!!") {
 							thongbaotot(msg);
-							tailaitrang();
+							taoDsKhachHang();
 						} else {
 							thongbaoloi(msg);
-							tailaitrang();
+							taoDsKhachHang();
 						}
 					},
 					error: function() {
