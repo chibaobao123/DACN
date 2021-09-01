@@ -18,9 +18,16 @@
     if ($result->num_rows > 0) {
         $khachHang = array();
 
-        while($row = $result->fetch_assoc()) {
-            array_push($khachHang, $row);
-        }
+        while($row = mysqli_fetch_row($result)) {
+			$r['id'] = $row['0'];
+			$r['ten'] = $row['1'];
+			$r['sdt'] = $row['2'];
+			$r['email'] = $row['3'];
+			$r['username'] = $row['4'];
+			$r['admin_number'] = $row['5'];
+			$r['soLanHuySan'] = $row['6'];
+			array_push($khachHang, $r);
+		}
         echo json_encode($khachHang);
 
     }
