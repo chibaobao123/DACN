@@ -422,20 +422,185 @@
 					url:'./api/search.php?search='+val_search,
 					data: {search:val_search},
 					dataType: "json",
-					success: function(response) {
-						console.log('SUCCESS');
-						console.table(response);
-						
+					success: function(data) {
 						// var obj = JSON.parse(response);
-						let html = searchTableItem(response);
+						let html = "";
+						html += "<table class='mytable mytable_timkiem' style='width: 100%;text-align: center;background-color:white;'>";
+						html += "<thead><tr><th>STT</th><th>Tên khách hàng</th><th>Username</th><th>Số điện thoại</th><th>Email</th><th>Chức vụ</th><th>Trạng thái</th><th>Công cụ</th></tr></thead>";
+						for (let i = 0; i < data.length; i++) {
+							html += "<tr>";
+							html += "<td>"+(i+1)+"</td><td>" + data[i].ten + "</td><td class='username'>" + data[i].username + "</td><td>" + data[i].sdt + "</td><td>" + data[i].email + "</td>";
+							
+							if(data[i].admin_number == 2 ){
+								html += "<td> Quản lý </td>"  ;
+							} else if (data[i].admin_number == 1) {
+								html += "<td> Nhân viên </td>";
+							} else {
+								html += "<td> Khách hàng </td>";
+							}
+							
+							var soLanHuySan = data[i].soLanHuySan;
+							if(soLanHuySan < 3){
+								html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-smile text-success'></i></td>";
+							} else if (soLanHuySan == 3) {
+								html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-warning'></i></td>";
+							}else if (soLanHuySan == 4) {	
+								html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-warning'></i></td>";
+							} else if (soLanHuySan == 5){
+								html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-danger'></i></td>";
+							}
 
+							html += "<td>";
+
+							if(data[i].admin_number == 2 ){
+								html += "<center><button title='Thay đổi quyền đăng nhập' class='btn-change_timkiem btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'username='" + data[i].username + "'admin_number='" + data[i].admin_number + "'><i class='fas fa-people-arrows text-success'></i></button>";
+							} else if (data[i].admin_number == 1) {
+								html += "<center><button title='Thay đổi quyền đăng nhập' class='btn-change_timkiem btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'username='" + data[i].username + "'admin_number='" + data[i].admin_number + "'><i class='fas fa-people-arrows text-info'></i></button>";
+
+							} else {
+								html += "<center><button title='Thay đổi quyền đăng nhập' class='btn-change_timkiem btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'username='" + data[i].username + "'admin_number='" + data[i].admin_number + "'><i class='fas fa-people-arrows'></i></button>";
+
+							}
+							
+							html += "<button title='Thay đỏi trạng thái' class='btn-changing_timkiem btn' username='" + data[i].username +"' ><i class='fas fa-exchange-alt'></i></button>";
+							html += "<button title='Chỉnh sửa' class='btn-edit_timkiem btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'><i class='fas fa-edit'></i></button>";
+							html += "<button title='Xóa' class='btn-del_timkiem btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'username='" + data[i].username + "' ><i class='fas fa-trash-alt'></i></button></center></td>";
+							html += "</tr>";
+						}
+						html += "</table>";
 						$("#tblSearch").html(html);
+
+						$('.btn-changing_timkiem').click(function(){
+								var u = $(this).attr("username");
+								var num = 0;
+								$.ajax({
+									url:'./api/thayDoiTrangThai.php',
+									type: "POST",
+									cache: false,
+									data: {
+										action: "change",
+										u : u,
+										num : num,
+									},
+									success: function(msg) {
+										if(msg == 'Thành công'){
+											thongbaotot(msg);
+											taoDsAdmin();
+											taoDsKhachHang();
+										} else {
+											thongbaoloi(msg);
+										}
+									},
+									error: function(result) {
+										console.log('ERROR');
+										console.log(result);
+									}
+								})
+							})
+							$(".btn-del_timkiem").click(function(){
+								var ma_kh = $(this).attr("ma_kh");
+								var username = $(this).attr("username");
+								console.log(username);
+								var xac_nhan = confirm("Bạn có chắc muốn xóa không?");
+									if (xac_nhan) {
+										xoaKh(ma_kh, username);
+									}
+							});
+
+							$('.btn-change_timkiem').click(function(){
+								var admin_number = $(this).attr("admin_number");
+								var ma_kh = $(this).attr("ma_kh");
+								var username = $(this).attr("username");
+								var num ;
+								var resetNum = 0;
+								
+								if (admin_number == 1) {
+									num = 0;
+								} else {
+									num = 1; 
+								}
+
+								console.log(admin_number, num, username);
+
+								changeAdminNumber(num, ma_kh, username, resetNum);
+							})
+						
+
+							$(".btn-edit_timkiem").click(function() {
+								console.log("click");
+								$(this).attr("disabled", "disabled");
+								var order = $(this).attr("order");
+								var ma_kh = $(this).attr("ma_kh");
+								var row = $(".mytable_timkiem tr")[order];
+						
+								var ten = $(row).find("td")[1];
+								var ten_value = $(ten).text();
+								$(ten).html("<input style='background:yellow;width:100%' id='ten-" + order + "' type='text' value='" + ten_value + "' /><br /><span class='thongbao'>" + THONG_BAO + "</span>");
+								$("#ten-" + order).focus();
+
+								// var username = $(row).find("td")[2];
+								// var username_value = $(username).text();
+								// $(username).html("<input style='background:yellow;width:100%' id='username-" + order + "' type='text' value='" + username_value + "' />");
+
+								var sdt = $(row).find("td")[3];
+								var sdt_value = $(sdt).text();
+								$(sdt).html("<input style='background:yellow;width:100%' id='sdt-" + order + "' type='text' value='" + sdt_value + "' />");
+
+								var email = $(row).find("td")[4];
+								var email_value = $(email).text();
+								$(email).html("<input style='background:yellow;width:100%' id='email-" + order + "' type='text' value='" + email_value + "' />");
+
+
+								$("#ten-" + order + ", #sdt-" + order + ", #email-" + order).keyup(function(e) {
+									if (e.keyCode == 27) {	// ESC
+										$(ten).find(".thongbao").remove();
+										$(ten).html(ten_value);
+										// $(username).html(username_value);
+										$(sdt).html(sdt_value);
+										$(email).html(email_value);
+										$($(".btn-edit_timkiem")[order - 1]).removeAttr("disabled");
+									}
+									if (e.keyCode == 13) {	// ENTER
+										var ten_moi = $("#ten-" + order).val();
+										// var username_moi = $("#username-" + order).val();
+										var sdt_moi = $("#sdt-" + order).val();
+										var email_moi = $("#email-" + order).val();
+										if ((ten_moi != ten_value || sdt_moi != sdt_value || email_moi != email_value) && kiemtraten(ten_moi) && kiemtrasdt(sdt_moi) && kiemtraten(email_moi)) {
+											suaKhachHang(ma_kh, ten_moi, sdt_moi, email_moi);
+											$(ten).html(ten_moi);
+											// $(username).html(username_moi);
+											$(sdt).html(sdt_moi);
+											$(email).html(email_moi);
+											$(ten).find(".thongbao").remove();
+											$($(".btn-edit_timkiem")[order - 1]).removeAttr("disabled");
+										}
+									}
+								});
+								
+							});
+						
+						$('.btn-show-khachhang').click(function(){
+							$('.content_admin').removeClass('border-bottom border-dark mx-3');
+							$('.content_khachhang').addClass('border-bottom border-dark mx-3');
+							$("#tblSearch").addClass('d-none');
+							$("#tblKhachHang").removeClass('d-none');
+							Dropdown(event, 'tblKhachHang')
+						})
+
+						$('.btn-show-admin').click(function(){
+							$('.content_khachhang').removeClass('border-bottom border-dark mx-3');
+							$('.content_admin').addClass('border-bottom border-dark mx-3');
+							$("#tblSearch").addClass('d-none');
+							$("#tblAdmin").removeClass('d-none');
+							Dropdown(event, 'tblAdmin')
+						})
+
+						
 						$("#tblAdmin").addClass('d-none');
 						$("#tblKhachHang").addClass('d-none');
 
 					},
 					error: function(result) {
-						console.log('ERROR');
 						console.log(result);
 						
 
@@ -468,180 +633,7 @@
 				$('.content_admin').addClass('border-bottom border-dark mx-3');
 				Dropdown(event, 'tblAdmin')
 			})
-
-			function searchTableItem(data){
-				
-				let html = "";
-						html += "<table class='mytable' style='width: 100%;text-align: center;background-color:white;'>";
-						html += "<thead><tr><th>STT</th><th>Tên khách hàng</th><th>Username</th><th>Số điện thoại</th><th>Email</th><th>Chức vụ</th><th>Trạng thái</th><th>Công cụ</th></tr></thead>";
-						for (let i = 0; i < data.length; i++) {
-							html += "<tr>";
-							html += "<td>"+(i+1)+"</td><td>" + data[i].ten + "</td><td class='username'>" + data[i].username + "</td><td>" + data[i].sdt + "</td><td>" + data[i].email + "</td>";
-							
-							if(data[i].admin_number == 2 ){
-								html += "<td> Quản lý </td>"  ;
-							} else if (data[i].admin_number == 1) {
-								html += "<td> Nhân viên </td>";
-							} else {
-								html += "<td> Khách hàng </td>";
-							}
-							
-							var soLanHuySan = data[i].soLanHuySan;
-							if(soLanHuySan < 3){
-								html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-smile text-success'></i></td>";
-							} else if (soLanHuySan == 3) {
-								html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-warning'></i></td>";
-							}else if (soLanHuySan == 4) {	
-								html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-warning'></i></td>";
-							} else if (soLanHuySan == 5){
-								html += "<td soHuy='"+ soLanHuySan +"'><i class='fas fa-angry text-danger'></i></td>";
-							}
-
-							html += "<td>";
-
-							if(data[i].admin_number == 2 ){
-								html += "<center><button title='Thay đổi quyền đăng nhập' class='btn-change btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'username='" + data[i].username + "'admin_number='" + data[i].admin_number + "'><i class='fas fa-people-arrows text-success'></i></button>";
-							} else if (data[i].admin_number == 1) {
-								html += "<center><button title='Thay đổi quyền đăng nhập' class='btn-change btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'username='" + data[i].username + "'admin_number='" + data[i].admin_number + "'><i class='fas fa-people-arrows text-info'></i></button>";
-
-							} else {
-								html += "<center><button title='Thay đổi quyền đăng nhập' class='btn-change btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'username='" + data[i].username + "'admin_number='" + data[i].admin_number + "'><i class='fas fa-people-arrows'></i></button>";
-
-							}
-							
-							html += "<button title='Thay đỏi trạng thái' class='btn-changing btn' username='" + data[i].username +"' ><i class='fas fa-exchange-alt'></i></button>";
-							html += "<button title='Chỉnh sửa' class='btn-edit btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'><i class='fas fa-edit'></i></button>";
-							html += "<button title='Xóa' class='btn-del btn' ma_kh='" + data[i].id +"' order='" + (i + 1) + "'username='" + data[i].username + "' ><i class='fas fa-trash-alt'></i></button></center></td>";
-							html += "</tr>";
-						}
-						html += "</table>";
-						$('.btn-changing').click(function(){
-							var u = $(this).attr("username");
-							var num = 0;
-							$.ajax({
-								url:'./api/thayDoiTrangThai.php',
-								type: "POST",
-								cache: false,
-								data: {
-									action: "change",
-									u : u,
-									num : num,
-								},
-								success: function(msg) {
-									if(msg == 'Thành công'){
-										thongbaotot(msg);
-										taoDsAdmin();
-										taoDsKhachHang();
-									} else {
-										thongbaoloi(msg);
-									}
-								},
-								error: function(result) {
-									console.log('ERROR');
-									console.log(result);
-								}
-							})
-						})
-						$(".btn-del").click(function(){
-							var ma_kh = $(this).attr("ma_kh");
-							var username = $(this).attr("username");
-							console.log(username);
-							var xac_nhan = confirm("Bạn có chắc muốn xóa không?");
-								if (xac_nhan) {
-									xoaKh(ma_kh, username);
-								}
-						});
-
-						$('.btn-change').click(function(){
-							var admin_number = $(this).attr("admin_number");
-							var ma_kh = $(this).attr("ma_kh");
-							var username = $(this).attr("username");
-							var num ;
-							var resetNum = 0;
-							
-							if (admin_number == 1) {
-								num = 0;
-							} else {
-								num = 1; 
-							}
-
-							console.log(admin_number, num, username);
-
-							changeAdminNumber(num, ma_kh, username, resetNum);
-						})
-						
-
-						$(".btn-edit").click(function() {
-							$(this).attr("disabled", "disabled");
-							var order = $(this).attr("order");
-							var ma_kh = $(this).attr("ma_kh");
-							var row = $(".mytable tr")[order];
-					
-							var ten = $(row).find("td")[1];
-							var ten_value = $(ten).text();
-							$(ten).html("<input style='background:yellow;width:100%' id='ten-" + order + "' type='text' value='" + ten_value + "' /><br /><span class='thongbao'>" + THONG_BAO + "</span>");
-							$("#ten-" + order).focus();
-
-							// var username = $(row).find("td")[2];
-							// var username_value = $(username).text();
-							// $(username).html("<input style='background:yellow;width:100%' id='username-" + order + "' type='text' value='" + username_value + "' />");
-
-							var sdt = $(row).find("td")[3];
-							var sdt_value = $(sdt).text();
-							$(sdt).html("<input style='background:yellow;width:100%' id='sdt-" + order + "' type='text' value='" + sdt_value + "' />");
-
-							var email = $(row).find("td")[4];
-							var email_value = $(email).text();
-							$(email).html("<input style='background:yellow;width:100%' id='email-" + order + "' type='text' value='" + email_value + "' />");
-
-
-							$("#ten-" + order + ", #sdt-" + order + ", #email-" + order).keyup(function(e) {
-								if (e.keyCode == 27) {	// ESC
-									$(ten).find(".thongbao").remove();
-									$(ten).html(ten_value);
-									// $(username).html(username_value);
-									$(sdt).html(sdt_value);
-									$(email).html(email_value);
-									$($(".btn-edit")[order - 1]).removeAttr("disabled");
-								}
-								if (e.keyCode == 13) {	// ENTER
-									var ten_moi = $("#ten-" + order).val();
-									// var username_moi = $("#username-" + order).val();
-									var sdt_moi = $("#sdt-" + order).val();
-									var email_moi = $("#email-" + order).val();
-									if ((ten_moi != ten_value || sdt_moi != sdt_value || email_moi != email_value) && kiemtraten(ten_moi) && kiemtrasdt(sdt_moi) && kiemtraten(email_moi)) {
-										suaKhachHang(ma_kh, ten_moi, sdt_moi, email_moi);
-										$(ten).html(ten_moi);
-										// $(username).html(username_moi);
-										$(sdt).html(sdt_moi);
-										$(email).html(email_moi);
-										$(ten).find(".thongbao").remove();
-										$($(".btn-edit")[order - 1]).removeAttr("disabled");
-									}
-								}
-							});
-							
-						});
-						$('.btn-show-khachhang').click(function(){
-							$('.content_admin').removeClass('border-bottom border-dark mx-3');
-							$('.content_khachhang').addClass('border-bottom border-dark mx-3');
-							$("#tblSearch").addClass('d-none');
-							$("#tblKhachHang").removeClass('d-none');
-							Dropdown(event, 'tblKhachHang')
-						})
-
-						$('.btn-show-admin').click(function(){
-							$('.content_khachhang').removeClass('border-bottom border-dark mx-3');
-							$('.content_admin').addClass('border-bottom border-dark mx-3');
-							$("#tblSearch").addClass('d-none');
-							$("#tblAdmin").removeClass('d-none');
-							Dropdown(event, 'tblAdmin')
-						})
-
-					return html;
-				
-			}
-
+			
 			function xoaKh(ma_kh,username){
 				$.ajax({
 				url: "/quanlysanbong/api/dskhachhang.php",

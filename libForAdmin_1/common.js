@@ -696,7 +696,7 @@ function veTableDatSanIndex(data) {
 function veTableDatSan(data) {
 	var html = "";
 	html += "<table class='mytable' style='width:100%; text-align: center;'>";
-	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Đơn giá (đồng/phút)</th><th>Tiền</th><th>trạng thái</th><th>Thanh toán</th><th>Yêu cầu hủy đặt sân</th></tr></thead>";
+	html += "<thead><tr><th>#</th><th>Tên KH</th><th>SĐT</th><th>Sân</th><th>Bắt đầu</th><th>Kết thúc</th><th>Phút</th><th>Tiền</th><th>trạng thái</th><th>Thanh toán</th><th>Yêu cầu hủy đặt sân</th></tr></thead>";
 	var tong_tien = 0;
 	var da_thanh_toan = 0;
 	var chua_thanh_toan = 0;
@@ -728,7 +728,7 @@ function veTableDatSan(data) {
 		}
 		tong_tien += money;
 		html += "<td>" + mins + "</td>";
-		html += "<td>" + formatMoney(don_gia) + "</td>";
+		
 		if (thanh_toan == "1") {
 			html += "<td style='font-weight:bold;color:green;'>" + formatMoney(money) + "</td>";
 		} else {
