@@ -151,7 +151,6 @@
      </section> 
 <div id="loginForm" >
 	<form class="form_dangnhap">
-		<h2 class="my-3" style="text-align:center;">QUẢN LÝ SÂN BÓNG ĐÁ</h2>
 		<label for="ten" >
 			<span style="font-size:25px; ">
 				<b>Tài khoản hoặc địa chỉ email:</b>
