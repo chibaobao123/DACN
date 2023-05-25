@@ -93,7 +93,7 @@ body{
 	right:0;
 	bottom:0;
 	left:0;
-	width:450px;
+	width:1250px;
 	height:550px;
 	z-index:100;
 	background:#eee;
@@ -128,108 +128,158 @@ body{
 <section class="formDatSan">
         <div id='grayscreen'></div>
         <div id='formDatSan'>
-            <b style='font-size: 18px;'>ĐẶT SÂN</b><br />
-            <br />
-            <table>
-                <tr>
-                    <td>Sân:</td>
-                    <td><span id='datsan_tensan' style='font-weight:bold;color:red;'></span></td>
-                </tr>
-                <tr>
-                    <td>Khách hàng:</td>
-                    <td><select id='datsan_kh' class='chosen'></select></td>
-                </tr>
-                
-                <tr>
-                    <td>
-                        <b>CHỌN NGÀY: </b>
-                    </td>
-                    <td>
-                        <span class='ngay_dat'></span><br/>
-                    
-                </tr>
-                <tr>
-                    <td>Bắt đầu:</td>
-                    <td>
-                        Giờ: 
-                        <select id="datsan_batdau_gio">
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>
-                        </select>
-                        Phút:
-                        <select id="datsan_batdau_phut">
-                            <option value="0">00</option>
-                            <option value="15">15</option>
-                            <option value="30">30</option>
-                            <option value="45">45</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Kết thúc:</td>
-                    <td>
-                        Giờ: 
-                        <select id='datsan_ketthuc_gio'>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>
-                        </select>
-                        Phút:
-                        <select id="datsan_ketthuc_phut">
-                            <option value="0">00</option>
-                            <option value="15" selected>15</option>
-                            <option value="30">30</option>
-                            <option value="45">45</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Tổng thời gian (phút):</td>
-                    <td><span id='datsan_phut'></span></td>
-                </tr>
-                <tr>
-                    <td>Đơn giá (/phút):</td>
-                    <td><span type='text' id='datsan_dongia' size='5'></span>đ</td>
-                </tr>
-                <tr>
-                    <td>Tổng tiền:</td>
-                    <td><span id='datsan_tongtien' style='color:red;font-weight:bold;'>0đ</span></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><br />
-                        <button class='btn btn-primary' id='datsan_ok'>Đồng ý</button>
-                        <button class='btn btn-primary' id='datsan_cancel'>Hủy</button>
-                    </td>
-                </tr>
-            </table>
+            <div class="row">
+                <div class="col">
+                    <b style='font-size: 18px;'>ĐẶT SÂN</b><br />
+                    <br />
+                    <table>
+                        <tr>
+                            <td>Sân:</td>
+                            <td><span id='datsan_tensan' style='font-weight:bold;color:red;'></span></td>
+                        </tr>
+                        <tr>
+                            <td>Khách hàng:</td>
+                            <td><select id='datsan_kh' class='chosen'></select></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" id='chbThemKhach' />Khách hàng mới</td>
+                            <td>
+                                <div id='datsan_themkhach' class='disabled'>
+                                    <table>
+                                        <tr>
+                                            <td>Tên</td>
+                                            <td><input type='text' id='datsan_them_ten' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Số điện thoại</td>
+                                            <td><input type='text' id='datsan_them_sdt' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><button id='datsan_btnthemkh'>Thêm</button></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>CHỌN NGÀY: </b>
+                            </td>
+                            <td>
+                                <span class='ngay_dat'></span><br/>
+                            
+                        </tr>
+                        <tr>
+                            <td>Bắt đầu:</td>
+                            <td>
+                                Giờ: 
+                                <select id="datsan_batdau_gio">
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                </select>
+                                Phút:
+                                <select id="datsan_batdau_phut">
+                                    <option value="0">00</option>
+                                    <option value="15">15</option>
+                                    <option value="30">30</option>
+                                    <option value="45">45</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Kết thúc:</td>
+                            <td>
+                                Giờ: 
+                                <select id='datsan_ketthuc_gio'>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                </select>
+                                Phút:
+                                <select id="datsan_ketthuc_phut">
+                                    <option value="0">00</option>
+                                    <option value="15" selected>15</option>
+                                    <option value="30">30</option>
+                                    <option value="45">45</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tổng thời gian (phút):</td>
+                            <td><span id='datsan_phut'></span></td>
+                        </tr>
+                        <tr>
+                            <td>Đơn giá (/phút):</td>
+                            <td><span type='text' id='datsan_dongia' size='5'></span>đ</td>
+                        </tr>
+                        <tr>
+                            <td>Tiền đồ uống:</td>
+                            <td><span id='tongtien_douong' style='color:red;font-weight:bold;' onchange='TongTienDat()'>0đ</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tiền đặt sân:</td>
+                            <td><span id='datsan_tongtien' style='color:red;font-weight:bold;' onchange='TongTienDat()'>0đ</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tổng tiền:</td>
+                            <td><span id='TongTien' style='color:red;font-weight:bold;'>0đ</span></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><br />
+                                <button class='btn btn-primary' id='datsan_ok'>Đồng ý</button>
+                                <button class='btn btn-primary' id='datsan_cancel'>Hủy</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col">
+                    <div class="col"  style='height:445px;overflow-y:auto'>
+                        <b style='font-size: 18px;'>Đồ uống</b><br />
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width='30%'>Sản phẩm</th>
+                                    <th scope="col" width='20%'>Gía tiền</th>
+                                    <th scope="col" width='25%'>Số lượng</th>
+                                    <th scope="col" width='25%'>Tồn kho</th>
+                                </tr>
+                            </thead>
+                            <tbody id='menu_do_uong_dat_san'>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </section>
 
@@ -243,6 +293,8 @@ body{
             xemDsDatSanIndex_1(getToday());
             xemDsHuySan(getToday());
             xemDsThanhToan(getToday());
+            getSanPham()
+
 
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -282,14 +334,20 @@ body{
                         if (msg.includes("trùng")) {
                             thongbaoloi("Không thể tạo đặt sân", msg);
                         } else {
-                            thongbaotot(msg);
+                            thongbaotot('Đặt sân thành công');
                         }
-                        console.log(msg);
+                        // console.log(msg);
                         var thoiGianthuc = $('.tieudetimeIndex').text();
                         xemDsDatSanIndex(thoiGianthuc);
                         xemDsDatSanIndex_1(thoiGianthuc);
                         xemDsHuySan(thoiGianthuc);
                         xemDsThanhToan(thoiGianthuc);
+
+                        let arr = arrMenuDatSan();
+                        // console.log(arr);
+                        if (arr.length > 0) {
+                            luuMenuDatSan(arr,msg)
+                        }
                     },
                     error: function() {
                         thongbaoloi("Lỗi hệ thống!!");
@@ -303,7 +361,7 @@ body{
                 var ma_san = $("#datsan_tensan").attr("ma_san");
                 var ten_san = $("#datsan_tensan").text();
                 var don_gia = parseInt($("#datsan_dongia").text());
-                var tong_tien =$("#datsan_tongtien").text();
+                var tong_tien =$("#TongTien").text();
                 var ngay_dat = $(".datsan_ngaydat").text();
                 var bat_dau_gio = $("#datsan_batdau_gio").val();
                 var bat_dau_phut = $("#datsan_batdau_phut").val();
@@ -332,6 +390,15 @@ body{
 
                 var checkThoiGianDatGio = parseInt(ket_thuc_gio) - parseInt(bat_dau_gio);
                 var checkThoiGianDatPhut = parseInt(ket_thuc_phut) - parseInt(bat_dau_phut);
+                
+                let objAmKho = laySanPhamAmKho();
+
+                if(objAmKho.length > 0){
+                    for (let x of objAmKho) {
+                        thongbaoloi(x.name + ' đang bị âm kho')
+                    }
+                    return
+                }
 
                 if (don_gia == "") {
                     $("#datsan_dongia").val("0");
@@ -347,6 +414,7 @@ body{
                         taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
+                        getSanPham()
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }
@@ -357,6 +425,7 @@ body{
                         taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
+                        getSanPham()
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }
@@ -375,6 +444,7 @@ body{
                         taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
+                        getSanPham()
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }
@@ -391,6 +461,7 @@ body{
                 $("#grayscreen").css("display","none");
                 $("#datsan_them_ten").val("");
                 $("#datsan_them_sdt").val("");
+                getSanPham()
             });
 
             $("#datsan_btnthemkh").click(function() {
@@ -410,28 +481,28 @@ body{
             });
             
             function themKhachHang(ten, sdt) {
-            $.ajax({
-                url: "../api/dskhachhang.php",
-                type: "POST",
-                cache: false,
-                data: {
-                    action: "add",
-                    ten : ten,
-                    sdt : sdt
-                },
-                success: function(msg) {
-                    if (msg.includes("đã tồn tại")) {
-                        thongbaoloi(msg);
-                    } else {
-                        $("#datsan_them_ten").val("");
-                        $("#datsan_them_sdt").val("");
-                        getDsKhachHang();
+                $.ajax({
+                    url: "../api/dskhachhang.php",
+                    type: "POST",
+                    cache: false,
+                    data: {
+                        action: "add",
+                        ten : ten,
+                        sdt : sdt
+                    },
+                    success: function(msg) {
+                        if (msg.includes("đã tồn tại")) {
+                            thongbaoloi(msg);
+                        } else {
+                            $("#datsan_them_ten").val("");
+                            $("#datsan_them_sdt").val("");
+                            getDsKhachHang();
+                        }
+                    },
+                    error: function() {
+                        alert("Khong the them khach hang moi!!!");
                     }
-                },
-                error: function() {
-                    alert("Khong the them khach hang moi!!!");
-                }
-            });
+                });
             }
         });
     </script>

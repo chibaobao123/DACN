@@ -415,8 +415,6 @@
 			$("#btn-search").on('click', function(){
 				var val_search = $('input[name="val_search"]').val();
 
-				console.log(val_search);
-
 				$.ajax({
 					type:'get',
 					url:'./api/search.php?search='+val_search,

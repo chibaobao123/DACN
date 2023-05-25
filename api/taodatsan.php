@@ -24,7 +24,7 @@
 	if ($count != 0) {
 		echo "Có ".$count." đặt sân bị trùng! Mỗi đặt sân phải cách nhau ít nhất 15 phút!";
 	} else {
-		$sql_insert = "INSERT INTO dat_san(ma_kh, ma_san, bat_dau, ket_thuc, da_thanh_toan, don_gia) VALUES ('$ma_kh','$ma_san','$bat_dau','$ket_thuc', '0','$don_gia')";
+		$sql_insert = "INSERT INTO dat_san(ma_kh, ma_san, bat_dau, ket_thuc, da_thanh_toan, don_gia, tong_tien) VALUES ('$ma_kh','$ma_san','$bat_dau','$ket_thuc', '0','$don_gia', $tong_tien)";
 		$query = mysqli_query($db, $sql_insert);
 		if ($query) {
 			$email = $row['email'];
@@ -101,14 +101,21 @@
 			$mail->Subject    = $title;// tieu de email 
 			$mail->MsgHTML($body);// noi dung chinh cua mail se nam o day.
 			$mail->AddAddress($mTo, $nTo);
-
+			
 			// thuc thi lenh gui mail 
-			if($mail->Send()) {
-				echo "Mail xác nhận đã được gửi cho bạn !!!";
+			// if(
+				$mail->Send();
+			// ) {
+			// 	echo "Mail xác nhận đã được gửi cho bạn !!!";
 					
-			} else {
+			// } else {
 					
-				echo "Mail gửi không thành công !!!";
+			// 	echo "Mail gửi không thành công !!!";
+			// }
+
+			$result = mysqli_query($db, "SELECT MAX(id) as ID FROM dat_san");
+			while ($row = $result->fetch_assoc()) {
+				echo $row['ID'];
 			}
 		} else {
 			echo "Đặt sân thất bại!!!".$sql_insert;
