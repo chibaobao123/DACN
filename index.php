@@ -258,7 +258,7 @@ body{
                             <td></td>
                             <td><br />
                                 <button class='btn btn-primary' id='datsan_ok'>Đồng ý</button>
-                                <!-- <button class='btn btn-primary' id='datsan_test' onclick='arrMenuDatSan()'>test</button> -->
+                                <button class='btn btn-primary' id='datsan_test' onclick="console.log($('#datsan_kh').val())">test</button>
                                 <button class='btn btn-primary' id='datsan_cancel'>Hủy</button>
                             </td>
                         </tr>
@@ -287,6 +287,10 @@ body{
         include("footer.php");
     ?>
 	<script>
+        function test(){
+                console.log(parseInt($("#tongtien_douong").text()))
+                
+            }
         $(document).ready(function() {
             
             xemDsDatSanIndex(getToday());
@@ -294,6 +298,7 @@ body{
             xemDsHuySan(getToday());
             xemDsThanhToan(getToday());
             getSanPham()
+
             
 
             var i, tabcontent, tablinks;
@@ -316,7 +321,7 @@ body{
             });
             
             
-            function taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien) {
+            function taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong) {
                 $.ajax({
                     url: "/quanlysanbong/api/taodatsan.php",
                     type: "POST",
@@ -331,7 +336,7 @@ body{
                         tong_tien : tong_tien,
                     },
                     success: function(msg) {
-                        console.log(msg)
+                        // console.log(msg)
                         if (msg.includes("trùng")) {
                             thongbaoloi("Không thể tạo đặt sân", msg);
                         } else {
@@ -345,8 +350,8 @@ body{
 
                         let arr = arrMenuDatSan();
                         // console.log(arr);
-                        if (arr.length > 0) {
-                            luuMenuDatSan(arr,msg)
+                        if (arr.length > 0) { 
+                            luuMenuDatSan(arr,msg,tien_dat_san,tien_do_uong)
                         }
                     },
                     error: function() {
@@ -357,40 +362,43 @@ body{
             
             $("#datsan_ok").click(function() {
                 // insert into database
-                var ma_kh = $("#datsan_kh").val();
-                var ma_san = $("#datsan_tensan").attr("ma_san");
-                var ten_san = $("#datsan_tensan").text();
-                var don_gia = parseInt($("#datsan_dongia").text());              
-                var tong_tien =parseInt($("#TongTien").text())*1000;
-                var ngay_dat = $(".datsan_ngaydat").text();
-                var bat_dau_gio = $("#datsan_batdau_gio").val();
-                var bat_dau_phut = $("#datsan_batdau_phut").val();
-                var ket_thuc_gio = $("#datsan_ketthuc_gio").val();
-                var ket_thuc_phut = $("#datsan_ketthuc_phut").val();
-                var bat_dau = ngay_dat + " " + bat_dau_gio + ":" + bat_dau_phut + ":" + "00";
-                var ket_thuc = ngay_dat + " " + ket_thuc_gio + ":" + ket_thuc_phut + ":" + "00";
+                let ma_kh = $("#datsan_kh").val();
+                let ma_san = $("#datsan_tensan").attr("ma_san");
+                let ten_san = $("#datsan_tensan").text();
+                let don_gia = parseInt($("#datsan_dongia").text().replace(/,/g, ""));                           
+                let tong_tien =parseInt($("#TongTien").text().replace(/,/g, ""));
+                let ngay_dat = $(".datsan_ngaydat").text();
+                let bat_dau_gio = $("#datsan_batdau_gio").val();
+                let bat_dau_phut = $("#datsan_batdau_phut").val();
+                let ket_thuc_gio = $("#datsan_ketthuc_gio").val();
+                let ket_thuc_phut = $("#datsan_ketthuc_phut").val();
+                let bat_dau = ngay_dat + " " + bat_dau_gio + ":" + bat_dau_phut + ":" + "00";
+                let ket_thuc = ngay_dat + " " + ket_thuc_gio + ":" + ket_thuc_phut + ":" + "00";
+
+                let tien_dat_san = parseInt($("#datsan_tongtien").text().replace(/,/g, ""));              
+                let tien_do_uong = parseInt($("#tongtien_douong").text().replace(/,/g, ""));
                 // console.log(tong_tien)
-                var date = new Date();
+                let date = new Date();
                 
-                var hoursNow = date.getHours();
-                var minutesNow = date.getMinutes();
-                var checkHours = parseInt(bat_dau_gio) - hoursNow;
-                var checkMinutes = parseInt(minutesNow) - parseInt(bat_dau_phut);
+                let hoursNow = date.getHours();
+                let minutesNow = date.getMinutes();
+                let checkHours = parseInt(bat_dau_gio) - hoursNow;
+                let checkMinutes = parseInt(minutesNow) - parseInt(bat_dau_phut);
                 // console.log(checkHours,parseInt(bat_dau_phut), minutesNow, bat_dau_gio, bat_dau_phut)
 
-                var ngayPresent = date.getDate();
-                var thangPresent = date.getMonth();
-                var namPresent = date.getFullYear();
+                let ngayPresent = date.getDate();
+                let thangPresent = date.getMonth();
+                let namPresent = date.getFullYear();
 
-                var ngay = $(".datsan_ngaydat").val().split("/");
+                let ngay = $(".datsan_ngaydat").val().split("/");
 	            
 
-                var checkNgay = ngay[1] - ngayPresent;
-                var checkThang = parseInt(ngay[0]) - 1 - thangPresent;
-                var checkNam = ngay[2] - namPresent;
+                let checkNgay = ngay[1] - ngayPresent;
+                let checkThang = parseInt(ngay[0]) - 1 - thangPresent;
+                let checkNam = ngay[2] - namPresent;
 
-                var checkThoiGianDatGio = parseInt(ket_thuc_gio) - parseInt(bat_dau_gio);
-                var checkThoiGianDatPhut = parseInt(ket_thuc_phut) - parseInt(bat_dau_phut);
+                let checkThoiGianDatGio = parseInt(ket_thuc_gio) - parseInt(bat_dau_gio);
+                let checkThoiGianDatPhut = parseInt(ket_thuc_phut) - parseInt(bat_dau_phut);
 
                 let objAmKho = laySanPhamAmKho();
 
@@ -412,7 +420,7 @@ body{
                 } else if ( checkThang > 0 && checkNam >= 0  || checkNam > 0) {
 
                     if(checkThoiGianDatGio >= 1 && checkThoiGianDatPhut >=0 || checkThoiGianDatGio > 1 ){
-                            taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san);
+                            taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                             $("#formDatSan").css("display","none");
                             $("#grayscreen").css("display","none");
                             getSanPham()
@@ -424,7 +432,7 @@ body{
                 } else if (checkNgay >= 1 && checkThang == 0 && checkNam == 0) {
 
                     if(checkThoiGianDatGio >= 1 && checkThoiGianDatPhut >=0 || checkThoiGianDatGio > 1 ){
-                        taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien);
+                        taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
                         getSanPham()
@@ -444,7 +452,7 @@ body{
                 } else if(checkHours >= 0 || checkHours == 0 && checkMinutes <= 30) {
 
                     if(checkThoiGianDatGio >= 1 && checkThoiGianDatPhut >=0 || checkThoiGianDatGio > 1 ){
-                        taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien);
+                        taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
                         getSanPham()
@@ -485,6 +493,7 @@ body{
             });
             
             function themKhachHang(ten, sdt) {
+                let tk = ten.toLowerCase().replace(/ /g, "");
                 $.ajax({
                     url: "/quanlysanbong/api/dskhachhang.php",
                     type: "POST",
@@ -492,7 +501,8 @@ body{
                     data: {
                         action: "add",
                         ten : ten,
-                        sdt : sdt
+                        sdt : sdt,
+                        tk : tk
                     },
                     success: function(msg) {
                         if (msg.includes("đã tồn tại")) {
@@ -501,6 +511,7 @@ body{
                             $("#datsan_them_ten").val("");
                             $("#datsan_them_sdt").val("");
                             getDsKhachHang();
+                            thongbaotot(msg);
                         }
                     },
                     error: function() {

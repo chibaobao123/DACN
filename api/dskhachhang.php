@@ -122,6 +122,7 @@
 	if (isset($_POST['action']) && $_POST['action'] == 'add') {
 		$ten = trim($_POST['ten']);
 		$sdt = trim($_POST['sdt']);
+		$tk = trim($_POST['tk']);
 		
 		$rs = mysqli_query($db, "SELECT * FROM khach_hang WHERE LOWER(ten)=LOWER('$ten')");
 		$trungten = false;
@@ -138,7 +139,8 @@
 		}
 		
 		if (!$trungten && !$trungsdt) {
-			$rs = mysqli_query($db, "INSERT INTO khach_hang(ten, sdt) VALUES('$ten','$sdt')");
+			$rs = mysqli_query($db, "INSERT INTO khach_hang(ten, sdt, username) VALUES('$ten','$sdt','$tk')");
+			$user = mysqli_query($db, "INSERT INTO 	tai_khoan(username, password_id, admin_number, email, sdt) VALUES('$tk','123456','0','','$sdt')");
 			echo "Khách hàng <b>'".$ten."</b> đã được thêm thành công!!!";
 		}
 	}

@@ -40,7 +40,7 @@ $(document).ready(function() {
 
 		$("#tieude").html("<b>Doanh thu từ ngày <span class='start'>" + bat_dau + "</span> đến <span class='end'>" + ket_thuc + "</span></b>");
 
-		console.log( bat_dau, ket_thuc, start, end);
+		// console.log( bat_dau, ket_thuc, start, end);
 
 		xemDoanhThu(bat_dau, ket_thuc);
     }

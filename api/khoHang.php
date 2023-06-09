@@ -133,11 +133,35 @@
 	if (isset($_POST['action']) && $_POST['action']=='TAO_MENU_DO_UONG') {
 		$dat_san_id = $_POST['id'];
 		$arr = array($_POST['data']);
-		echo var_dump(($arr[0]));
+		$tien_dat_san = $_POST['tien_dat_san'];
+		$tien_do_uong = $_POST['tien_do_uong'];
+		$date = date('Y-m-d H:i:s');
+
+		$create_hoa_don = mysqli_query(
+			$db, 
+			"INSERT INTO hoa_don(dat_san,tien_dat_san,tien_do_uong,ngay_tao) 
+				VALUE('$dat_san_id','$tien_dat_san','$tien_do_uong','$date')"
+		);
+
+		$get_id_hoa_don = mysqli_query(
+			$db, 
+			"SELECT MAX(id) as id FROM hoa_don"
+		);
+
+		$id_hoa_don = mysqli_fetch_assoc($get_id_hoa_don);
+		$id = $id_hoa_don['id'];
+
+		// echo var_dump(($arr[0]));
 
 		for ($x = 0; $x < count($arr[0]); $x++) {
 			$sanPham = $arr[0][$x]['id'];
 			$so_luong = $arr[0][$x]['so_luong'];
+
+			$create_hoa_don_chi_tiet = mysqli_query(
+				$db, 
+				"INSERT INTO hoa_don_chi_tiet(san_pham,so_luong,hoa_don) 
+					VALUE('$sanPham','$so_luong','$id')"
+			);
 
 			// echo var_dump($arr[0][$x]);
 
@@ -168,6 +192,94 @@
 
 		echo 'Đã lưu Phiếu đồ ăn';
 
+	}
+
+	if (isset($_GET['action']) && $_GET['action']=='HOA_DON_CHI_TIET') {
+		$id = $_GET['id'];
+
+		$sql = " SELECT 
+			hd.id as hoa_don_id,
+			sb.ten as ten_san,
+			hd.tien_dat_san, hd.tien_do_uong, hd.ngay_tao,
+			kh.san_pham as ten_sanPham,
+			hdct.so_luong,
+			khach_hang.ten as ten_khachHang,
+			ds.bat_dau, ds.ket_thuc, ds.da_thanh_toan, ds.don_gia, ds.note,
+			khach_hang.sdt,
+			kh.gia_tien
+			
+			FROM hoa_don as hd
+			LEFT JOIN hoa_don_chi_tiet as hdct
+			ON hd.id = hdct.hoa_don
+			LEFT JOIN dat_san AS ds
+			ON ds.id = hd.dat_san
+			LEFT JOIN san_bong AS sb
+			ON sb.id = ds.ma_san
+			LEFT JOIN kho_hang AS kh
+			ON kh.id = hdct.san_pham
+			LEFT JOIN khach_hang
+			ON khach_hang.id = ds.ma_kh	
+			WHERE hd.dat_san = $id;
+		";
+	
+		$rs = mysqli_query($db, $sql);
+		$json_response = array();
+		
+		while($row = mysqli_fetch_row($rs)) {
+			$r['hoa_don_id'] = $row['0'];
+			$r['ten_san'] = $row['1'];
+			$r['tien_dat_san'] = $row['2'];
+			$r['tien_do_uong'] = $row['3'];
+			$r['ngay_tao'] = $row['4'];
+			$r['ten_sanPham'] = $row['5'];
+			$r['so_luong'] = $row['6'];
+			$r['ten_khachHang'] = $row['7'];
+			$r['bat_dau'] = $row['8'];
+			$r['ket_thuc'] = $row['9'];
+			$r['da_thanh_toan'] = $row['10'];
+			$r['don_gia'] = $row['11'];
+			$r['note'] = $row['12'];
+			$r['sdt'] = $row['13'];
+			$r['gia_tien'] = $row['14'];
+			array_push($json_response, $r);
+		}
+
+		echo json_encode($json_response);
+	}
+
+	if (isset($_GET['action']) && $_GET['action']=='HOA_DON_CHI_TIET_KHONG_DO_UONG') {
+		$id = $_GET['id'];
+
+		$sql = " SELECT khach_hang.ten as 'ten_kh', khach_hang.sdt, 
+			san_bong.ten, 
+			dat_san.bat_dau, dat_san.ket_thuc, dat_san.id, dat_san.da_thanh_toan, 
+			dat_san.don_gia, dat_san.ma_san, dat_san.note, dat_san.tong_tien 
+			FROM dat_san, khach_hang, san_bong 
+			WHERE dat_san.ma_kh=khach_hang.id 
+			AND dat_san.ma_san=san_bong.id 
+			AND dat_san.id = $id 
+			ORDER BY san_bong.ten, dat_san.bat_dau
+		";
+	
+		$rs = mysqli_query($db, $sql);
+		$json_response = array();
+		
+		while($row = mysqli_fetch_row($rs)) {
+			$r['ten_kh'] = $row['0'];
+			$r['sdt'] = $row['1'];
+			$r['ten_san'] = $row['2'];
+			$r['bat_dau'] = $row['3'];
+			$r['ket_thuc'] = $row['4'];
+			$r['id'] = $row['5'];
+			$r['da_thanh_toan'] = $row['6'];
+			$r['don_gia'] = $row['7'];
+			$r['ma_san'] = $row['8'];
+			$r['note'] = $row['9'];
+			$r['tong_tien'] = $row['10'];
+			array_push($json_response, $r);
+		}
+
+		echo json_encode($json_response);
 	}
 
 ?>

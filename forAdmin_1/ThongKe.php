@@ -34,7 +34,11 @@
 	<div class="soSanhChartSan">
 		<h2>Chọn sân để xem biểu đồ thông tin</h2>
 		<div id="multi_select_san_chart"></div>
+		<div id="compare_san_chart" style='height:500px'></div>
 	</div>
+	<!-- <div class="soSanhSanPham">
+		<h2>biểu đồ sản phẩm</h2>
+	</div> -->
 </section>
 
 </section>

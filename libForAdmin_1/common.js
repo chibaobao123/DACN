@@ -339,12 +339,12 @@ function veTableDatSanDanhSachThanhToan(data) {
 			var status = "<img src='images/failed.png' />";
 		}
 		html += "<tr>";
-		html += "<td >" + (i + 1) + "</td>";
-		html += "<td class='ten_kh'>" + data[i].ten_kh + "</td>";
-		html += "<td class='sdt'>" + data[i].sdt + "</td>";
-		html += "<td class='ten_san'>" + data[i].ten_san + "</td>";
-		html += "<td class='bat_dau'>" + data[i].bat_dau + "</td>";
-		html += "<td class='ket_thuc'>" + data[i].ket_thuc + "</td>";
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan" >` + (i + 1) + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan" class='ten_kh'>` + data[i].ten_kh + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan" class='sdt'>` + data[i].sdt + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan" class='ten_san'>` + data[i].ten_san + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan" class='bat_dau'>` + data[i].bat_dau + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan" class='ket_thuc'>` + data[i].ket_thuc + `</td>`;
 
 		var don_gia = data[i].don_gia;
 		var start = toDateTime(data[i].bat_dau);
@@ -358,12 +358,12 @@ function veTableDatSanDanhSachThanhToan(data) {
 			chua_thanh_toan += money;
 		}
 		tong_tien += money;
-		html += "<td>" + mins + "</td>";
-		html += "<td>" + formatMoney(don_gia) + "</td>";
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan">` + mins + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan">` + formatMoney(don_gia) + `</td>`;
 		if (thanh_toan == "1") {
-			html += "<td style='font-weight:bold;color:green;'>" + formatMoney(money) + "</td>";
+			html += `<td style='font-weight:bold;color:green;' onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan">` + formatMoney(money) + "</td>";
 		} else {
-			html += "<td style='font-weight:bold;color:red;'>" + formatMoney(money) + "</td>";
+			html += `<td style='font-weight:bold;color:red;' onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_thanh_toan">` + formatMoney(money) + "</td>";
 		}
 		if (thanh_toan == "0") {
 			html += "<td><center><button class='btnThanhToan btn btn-light border border-dark' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-check text-success'></i></button>";
@@ -382,6 +382,28 @@ function veTableDatSanDanhSachThanhToan(data) {
 	}
 
 	html += "</table>";
+
+	html += `
+	<div class="modal fade" id="hoa_don_chi_tiet_da_thanh_toan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Chi tiết hóa đơn</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body" id='form_chi_tiet_hoa_don_da_thanh_toan'>
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  `
+
 	$(".ds_datsanDanhSachThanhToan").html(html);
 	$(".content_thanhtoan").html(html_content);
 
@@ -438,12 +460,12 @@ function veTableDatSanDanhSachHuy(data) {
 			var status = "<img src='images/failed.png' />";
 		}
 		html += "<tr>";
-		html += "<td >" + (i + 1) + "</td>";
-		html += "<td class='ten_kh'>" + data[i].ten_kh + "</td>";
-		html += "<td class='sdt'>" + data[i].sdt + "</td>";
-		html += "<td class='ten_san'>" + data[i].ten_san + "</td>";
-		html += "<td class='bat_dau'>" + data[i].bat_dau + "</td>";
-		html += "<td class='ket_thuc'>" + data[i].ket_thuc + "</td>";
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy" >` + (i + 1) + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy" class='ten_kh'>` + data[i].ten_kh + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy" class='sdt'>` + data[i].sdt + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy" class='ten_san'>` + data[i].ten_san + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy" class='bat_dau'>` + data[i].bat_dau + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy" class='ket_thuc'>` + data[i].ket_thuc + `</td>`;
 
 		var don_gia = data[i].don_gia;
 		var start = toDateTime(data[i].bat_dau);
@@ -457,12 +479,12 @@ function veTableDatSanDanhSachHuy(data) {
 			chua_thanh_toan += money;
 		}
 		tong_tien += money;
-		html += "<td>" + mins + "</td>";
-		html += "<td>" + formatMoney(don_gia) + "</td>";
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy">` + mins + `</td>`;
+		html += `<td onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy">` + formatMoney(don_gia) + `</td>`;
 		if (thanh_toan == "1") {
-			html += "<td style='font-weight:bold;color:green;'>" + formatMoney(money) + "</td>";
+			html += `<td style='font-weight:bold;color:green;' onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy">` + formatMoney(money) + "</td>";
 		} else {
-			html += "<td style='font-weight:bold;color:red;'>" + formatMoney(money) + "</td>";
+			html += `<td style='font-weight:bold;color:red;' onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet_da_huy">` + formatMoney(money) + "</td>";
 		}
 		if (thanh_toan == "0") {
 			html += "<td><center><button class='btnThanhToan btn btn-light border border-dark' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-check text-success'></i></button>";
@@ -477,6 +499,28 @@ function veTableDatSanDanhSachHuy(data) {
 	}
 
 	html += "</table>";
+
+	html += `
+	<div class="modal fade" id="hoa_don_chi_tiet_da_huy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Chi tiết hóa đơn</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body" id='form_chi_tiet_hoa_don_da_huy'>
+			
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  `
+
 	$(".ds_datsanDanhSachHuy").html(html);
 	$(".content_huysan").html(html_content);
 
@@ -531,13 +575,13 @@ function veTableDatSanIndex(data) {
 		} else {
 			var status = "<img src='images/failed.png' />";
 		}
-		html += "<tr>";
-		html += "<td >" + (i + 1) + "</td>";
-		html += "<td class='ten_kh'>" + data[i].ten_kh + "</td>";
-		html += "<td class='sdt'>" + data[i].sdt + "</td>";
-		html += "<td class='ten_san'>" + data[i].ten_san + "</td>";
-		html += "<td class='bat_dau'>" + data[i].bat_dau + "</td>";
-		html += "<td class='ket_thuc'>" + data[i].ket_thuc + "</td>";
+		html += `<tr>`;
+		html += `<td  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet">` + (i + 1) + "</td>";
+		html += `<td  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='ten_kh'>` + data[i].ten_kh + "</td>";
+		html += `<td  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='sdt'>` + data[i].sdt + "</td>";
+		html += `<td  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='ten_san'>` + data[i].ten_san + "</td>";
+		html += `<td  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='bat_dau'>` + data[i].bat_dau + "</td>";
+		html += `<td  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='ket_thuc'>` + data[i].ket_thuc + "</td>";
 
 		var don_gia = data[i].don_gia;
 		var start = toDateTime(data[i].bat_dau);
@@ -551,12 +595,12 @@ function veTableDatSanIndex(data) {
 			chua_thanh_toan += money;
 		}
 		tong_tien += money;
-		html += "<td>" + mins + "</td>";
-		html += "<td>" + formatMoney(don_gia) + "</td>";
+		html += `<td  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet">` + mins + `</td>`;
+		html += `<td  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet">` + formatMoney(don_gia) + `</td>`;
 		if (thanh_toan == "1") {
-			html += "<td style='font-weight:bold;color:green;'>" + formatMoney(money) + "</td>";
+			html += `<td style='font-weight:bold;color:green;'  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet">` + formatMoney(money) + `</td>`;
 		} else {
-			html += "<td style='font-weight:bold;color:red;'>" + formatMoney(money) + "</td>";
+			html += `<td style='font-weight:bold;color:red;'  onclick=chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet">` + formatMoney(money) + `</td>`;
 		}
 		if (thanh_toan == "0") {
 			html += "<td><center><button class='btnThanhToan_index btn btn-light border border-dark' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-check text-success'></i></button>";
@@ -571,6 +615,28 @@ function veTableDatSanIndex(data) {
 
 
 	html += "</table>";
+
+	html += `
+		<div class="modal fade" id="hoa_don_chi_tiet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Chi tiết hóa đơn</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id='form_chi_tiet_hoa_don'>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+				</div>
+			</div>
+		</div>
+	`
+
 	$(".ds_datsanIndex").html(html);
 	$(".content_datsan").html(html_content);
 
@@ -692,6 +758,146 @@ function veTableDatSanIndex(data) {
 	});
 }
 
+function chiTietHoaDon(id) {
+	$.ajax({
+		url: "/quanlysanbong/api/khoHang.php",
+		type: "GET",
+		cache: false,
+		data: {
+			action: "HOA_DON_CHI_TIET",
+			id: id,
+		},
+		success: function (json) {
+			// console.log(json)
+			let data = $.parseJSON(json)
+			console.log(data)
+			let html = '';
+
+			if (data.length != 0) {
+				html += `
+			<div class="row">
+			  <div class="col">
+				<label><b>Mã hóa đơn:</b></label>
+				<p>${data[0].hoa_don_id}</p>
+				<label><b>Tên khách hàng:</b></label>
+				<p>${data[0].ten_khachHang}</p>
+				<label><b>Bắt đầu:</b></label>
+				<p>${data[0].bat_dau}</p>
+				<label><b>Đơn giá (/phút):</b></label>
+				<p>${data[0].don_gia}</p>
+				<label><b>Thanh toán:</b></label>
+				<p>${(data[0].da_thanh_toan == '0') ? 'Chưa thanh toán' : 'Đã thanh toán'}</p>
+			  </div>
+			  <div class="col">
+				<label><b>Sân:</b></label>
+				<p>${data[0].ten_san}</p>
+				<label><b>Số điện thoại:</b></label>
+				<p>${data[0].sdt}</p>
+				<label><b>Kết thúc:</b></label>
+				<p>${data[0].ket_thuc}</p>
+				<label><b>Tiền đặt sân:</b></label>
+				<p>${data[0].tien_dat_san}</p>
+				<label><b>Ngày tạo hóa đơn:</b></label>
+				<p>${data[0].ngay_tao}</p>
+			  </div>
+			</div>
+			<label><b>Ghi chú:</b></label>
+			<textarea class="form-control" type="text" disabled>${data[0].note}</textarea>
+			<div class="mt-2" style="height: 250px;overflow: auto;">
+			<table class="table">
+			  <thead class="table-active">
+				<tr>
+				  <th>Sản phẩm</th>
+				  <th>Giá tiền</th>
+				  <th>Số lượng</th>
+				  <th>Thành tiền</th>
+				</tr>
+			  </thead>
+			  <tbody>
+		  `
+				for (let i = 0; i < data.length; i++) {
+					html += `<tr>
+					  <td>${data[i].ten_sanPham}</td>
+					  <td>${formatMoney(data[i].gia_tien)}</td>
+					  <td>${data[i].so_luong}</td>
+					  <td>${formatMoney(parseInt(data[i].gia_tien) * parseInt(data[i].so_luong))}</td>
+				  </tr>`
+				}
+
+				html += `
+			  </tbody >
+			</table >
+			</div>
+			<div>
+			  <span><b>Tổng tiền:</b> ${formatMoney(data[0].tien_do_uong)}</span>
+			</div>
+		  `
+
+			} else {
+				$.ajax({
+					url: "/quanlysanbong/api/khoHang.php",
+					type: "GET",
+					cache: false,
+					data: {
+						action: "HOA_DON_CHI_TIET_KHONG_DO_UONG",
+						id: id,
+					},
+					success: function (json) {
+						console.log(json)
+						let data = $.parseJSON(json)
+						// console.log(data)
+						let html = '';
+
+						html += `
+		  <div div class="row" >
+				  <div class="col">
+					<label><b>Mã hóa đơn:</b></label>
+					<p>${data[0].id}</p>
+					<label><b>Tên khách hàng:</b></label>
+					<p>${data[0].ten_kh}</p>
+					<label><b>Bắt đầu:</b></label>
+					<p>${data[0].bat_dau}</p>
+					<label><b>Đơn giá (/phút):</b></label>
+					<p>${data[0].don_gia}</p>
+					<label><b>Thanh toán:</b></label>
+					<p>Chưa thanh toán</p>
+				  </div>
+				  <div class="col">
+					<label><b>Sân:</b></label>
+					<p>${data[0].ten_san}</p>
+					<label><b>Số điện thoại:</b></label>
+					<p>${data[0].sdt}</p>
+					<label><b>Kết thúc:</b></label>
+					<p>${data[0].ket_thuc}</p>
+					<label><b>Tiền đặt sân:</b></label>
+					<p>${data[0].tong_tien}</p>
+				  </div>
+				</div >
+				<label><b>Ghi chú:</b></label>
+				<textarea class="form-control" type="text" value='${data[0].note}'></textarea>
+		`
+
+						$('#form_chi_tiet_hoa_don').html(html)
+						$('#form_chi_tiet_hoa_don_da_huy').html(html)
+						$('#form_chi_tiet_hoa_don_da_thanh_toan').html(html)
+					},
+					error: function (err) {
+						console.log(err)
+					}
+				})
+			}
+
+
+			$('#form_chi_tiet_hoa_don_da_thanh_toan').html(html)
+			$('#form_chi_tiet_hoa_don_da_huy').html(html)
+			$('#form_chi_tiet_hoa_don').html(html)
+		},
+		error: function (err) {
+			console.log(err)
+		},
+	});
+}
+
 function veTableDatSan(data) {
 	var html = "";
 	html += "<table class='mytable' style='width:100%; text-align: center;'>";
@@ -707,12 +913,12 @@ function veTableDatSan(data) {
 			var status = "<img src='../images/failed.png' />";
 		}
 		html += "<tr>";
-		html += "<td>" + (i + 1) + "</td>";
-		html += "<td class='ten_kh'>" + data[i].ten_kh + "</td>";
-		html += "<td class='sdt'>" + data[i].sdt + "</td>";
-		html += "<td class='ten_san'>" + data[i].ten_san + "</td>";
-		html += "<td class='bat_dau'>" + data[i].bat_dau + "</td>";
-		html += "<td class='ket_thuc'>" + data[i].ket_thuc + "</td>";
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" > ` + (i + 1) + `</td > `;
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='ten_kh' > ` + data[i].ten_kh + `</td > `;
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='sdt' > ` + data[i].sdt + `</td > `;
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='ten_san' > ` + data[i].ten_san + `</td > `;
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='bat_dau' > ` + data[i].bat_dau + `</td > `;
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" class='ket_thuc' > ` + data[i].ket_thuc + `</td > `;
 
 		var don_gia = data[i].don_gia;
 		var start = toDateTime(data[i].bat_dau);
@@ -726,15 +932,15 @@ function veTableDatSan(data) {
 			chua_thanh_toan += money;
 		}
 		tong_tien += money;
-		html += "<td>" + mins + "</td>";
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet" > ` + mins + "</td>";
 
 		if (thanh_toan == "1") {
-			html += "<td style='font-weight:bold;color:green;'>" + formatMoney(money) + "</td>";
+			html += `<td style='font-weight:bold;color:green;' onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet">` + formatMoney(money) + `</td>`;
 		} else {
-			html += "<td style='font-weight:bold;color:red;'>" + formatMoney(money) + "</td>";
+			html += `<td style='font-weight:bold;color:red;' onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet">` + formatMoney(money) + `</td>`;
 		}
 
-		html += "<td>" + status + "</td>";
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet">` + status + "</td>";
 
 		if (thanh_toan == "0") {
 			html += "<td><center><button class='btnThanhToan_1 btn btn-light border border-dark' datsan_id='" + data[i].datsan_id + "'><i class='fas fa-check text-success'></i></button>";
@@ -749,7 +955,7 @@ function veTableDatSan(data) {
 
 		}
 
-		html += "<td><center><span>" + data[i].note + "</span></center></td>";
+		html += `<td onclick = chiTietHoaDon('${data[i].datsan_id}') data-toggle="modal" data-target="#hoa_don_chi_tiet"><center><span>` + data[i].note + "</span></center></td>";
 		// html += "<td><center><span><input type='checkbox' class='choose' name='choose' value='choose' bat_dau='" + data[i].bat_dau + "' ket_thuc='" + data[i].ket_thuc + "'sdt='" + data[i].sdt + "' ten_kh='" + data[i].ten_kh + "' ten_san='" + data[i].ten_san + "' datsan_id='" + data[i].datsan_id + "'></span></center></td>";
 		html += "</tr>";
 	}
@@ -759,6 +965,28 @@ function veTableDatSan(data) {
 	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Chưa thanh toán</b></td><td style='font-weight:bold;color:red;'>" + formatMoney(chua_thanh_toan) + "</td><td></td><td></td><td></td></tr>";
 	html += "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><b>Tổng tiền</b></td><td style='font-weight:bold;color:blue;'>" + formatMoney(tong_tien) + "</td><td></td><td></td><td></td></tr>";
 	html += "</table>";
+
+	html += `
+	<div div class="modal fade" id ="hoa_don_chi_tiet" tabindex ="-1" role ="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Chi tiết hóa đơn</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body" id='form_chi_tiet_hoa_don'>
+
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+</div >
+	`
+
 	$(".ds_datsan").html(html);
 
 	// $('.btnAllDelete').click(function() {
@@ -1234,7 +1462,7 @@ function getDataKhoHangKiemKe() {
 				tongTonKho = 0;
 
 			html += `<div style='height:500px; overflow-y:  scroll'>
-			<table class='mytable text-center' id='thongTinKhoHang' >
+			<table class='mytable text-center' id='form_phieuKiemKe' >
 			  <thead>
 				<tr class="">
 				  <th>Mã sản phẩm</th>
@@ -1294,7 +1522,6 @@ function getDataKhoHangKiemKe() {
 				
 				
 			  <div class="text-right">
-              <a class="btn btn-primary" onclick="xuatFileExcel()">Xuất Excel</a>
 				<a class="btn btn-success" onclick="luuPhieuKiemKe()">Lưu bảng kiểm kê</a>
 				<a class="btn btn-danger" onclick="getDataKhoHangKiemKe();">Reset dữ liệu</a>
 			  </div>
@@ -1338,7 +1565,7 @@ function getDataKhoHang() {
 				  <th>Gía tiền</th>
 				  <th>Tồn kho</th>
 				  <th>Thành tiền</th>
-				  <th>Công cụ</th>
+				  <th class='noExl'>Công cụ</th>
 				</tr>
 			  </thead>
 			  <tbody id='sanPhamTonKho'>`;
@@ -1354,7 +1581,7 @@ function getDataKhoHang() {
 						<td>${formatMoney(e.gia_tien)}</td>
 						<td>${e.ton_kho}</td>
 						<td>${formatMoney(thanhTien)}</td>
-						<td>
+						<td class='noExl'>
 						  <button title="Chỉnh sửa" class="btn-edit btn" onclick="chinhSuaThongTinKho(this,${order},${e.id
 					})" order='${order}'><i class="fas fa-edit" aria-hidden="true"></i></button>
 						  <button title="Xóa" class="btn-del btn" onclick="xoaSanPham(${e.id
@@ -1373,14 +1600,16 @@ function getDataKhoHang() {
 			total = `
 		<table class='mytable text-center mr-1'>
 		
-		  <tbody class='border'>
-		  <tr>
-		  <td width='735'>Tổng:</td>
-		  <td width='180'>${formatMoney(tongTonKho)}</td>
-		  <td width='228'>${formatMoney(tongTien)}</td>
-		  <td></td>
-		</tr>
-		  </tbody>
+		<tbody class='border'>
+			<tr>
+				<td width='727'>Tổng:</td>
+				<td width='180'>${formatMoney(tongTonKho)}</td>
+				<td width='225'>${formatMoney(tongTien)}</td>
+				<td>    
+				<a class="btn btn-primary" onclick="xuatFileExcel('thongTinKhoHang','Phieu kho')">Xuất Excel</a>
+				</td>
+			</tr>
+        </tbody>
 		</table>
 		  
 		  `;
@@ -1673,7 +1902,7 @@ function veXemPhieuKiemKe(data) {
 	} else {
 		data.forEach((e) => {
 			html += `
-								  <tr onclick='phieuKiemKeChiTiet(${e.id})' data-toggle="modal" data-target="#exampleModalCenter">
+								  <tr onclick='phieuKiemKeChiTiet(${e.id})' data-toggle="modal" data-target="#exampleModalCenter" style='cursor: pointer;' title='Bấm để xem chi tiết'>
 									<td >${e.id}</td>
 									<td>${e.user}</td>
 									<td>${e.ngay_tao}</td>
@@ -1699,6 +1928,7 @@ function veXemPhieuKiemKe(data) {
 				
 			  </div>
 			  <div class="modal-footer">
+              	<a class="btn btn-primary" onclick="xuatFileExcel('thongTinKiemKeKhoHang','Phieu kiem kho')">Xuất Excel</a>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
 			  </div>
 			</div>
@@ -1727,7 +1957,7 @@ function phieuKiemKeChiTiet(id) {
 				tongTonKho = 0;
 
 			html += `<div style='height:500px; overflow-y:  scroll'>
-			<table class='mytable text-center' id='thongTinKhoHang' >
+			<table class='mytable text-center' id='thongTinKiemKeKhoHang' >
 			  <thead>
 				<tr class="">
 				  <th>Mã</th>
@@ -1860,7 +2090,8 @@ function arrMenuDatSan() {
 	return valueArr
 }
 
-function luuMenuDatSan(arr, id) {
+function luuMenuDatSan(arr, id, tien_dat_san, tien_do_uong) {
+	console.log(arr, id, tien_dat_san, tien_do_uong);
 	$.ajax({
 		url: "/quanlysanbong/api/khoHang.php",
 		type: "POST",
@@ -1868,7 +2099,9 @@ function luuMenuDatSan(arr, id) {
 		data: {
 			action: "TAO_MENU_DO_UONG",
 			id: id,
-			data: arr
+			data: arr,
+			tien_dat_san: tien_dat_san,
+			tien_do_uong: tien_do_uong
 		},
 		success: function (json) {
 			console.log(json)
@@ -1906,7 +2139,7 @@ function TongTienDat() {
 	let tien_san = parseInt($("#datsan_tongtien").text().replace(/,/g, ""))
 	let tien_do_uong = parseInt($("#tongtien_douong").text().replace(/,/g, ""))
 	// console.log(tien_san, tien_do_uong)
-	let tien = (tien_san + tien_do_uong) * 1000
+	let tien = (tien_san + tien_do_uong)
 	// console.log(tien)
 	$('#TongTien').html(formatMoney(tien) + "đ")
 }
@@ -2079,7 +2312,7 @@ async function chartDoanhThuSan() {
       <option value="${e.id}">${e.name}</option>
     `
 		multiSelect += `
-      <button id="multi_select_sanID_${e.id}" class='btn btn-outline-secondary' checked='false' name='${e.name}' onclick=createChartCompare("multi_select_sanID_${e.id}","${e.id}")>${e.name}</button>
+      <button id="multi_select_sanID_${e.id}" class='btn btn-outline-secondary' checked='false' name='${e.name}' onclick='createChartCompare("multi_select_sanID_${e.id}","${e.id}")'>${e.name}</button>
     `
 	})
 
@@ -2382,4 +2615,16 @@ async function createChartCompare(tagID, id) {
 	// var parent = document.getElementById("parent");
 	// parent.appendChild(divElem);
 
+}
+
+function xuatFileExcel(idTable, name) {
+	$(`#${idTable}`).table2excel({
+		exclude: ".noExl",
+		name: "Excel Document Name",
+		filename: name + ' ' + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+		fileext: ".xls",
+		exclude_img: true,
+		exclude_links: true,
+		exclude_inputs: false,
+	});
 }
