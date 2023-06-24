@@ -41,9 +41,9 @@
 				<li class="nav-item">
 					<a class="nav-link  text-light"  href='ThongKe.php' id='navThongKe'>Thông Kê</a>
 				</li>
-				<li class="nav-item">
+				<!-- <li class="nav-item">
 					<a class="nav-link  text-light"  href='./lib/test.php' id='navThongKe'>Test</a>
-				</li>
+				</li> -->
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
 				<a class='nav-link text-light'  href='taikhoan.php'><i class="fas fa-user" style="margin-right:10px"></i><span id="taikhoan_user"><?php echo $_SESSION['login_user']; ?></span></a>

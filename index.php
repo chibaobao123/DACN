@@ -258,7 +258,7 @@ body{
                             <td></td>
                             <td><br />
                                 <button class='btn btn-primary' id='datsan_ok'>Đồng ý</button>
-                                <button class='btn btn-primary' id='datsan_test' onclick="console.log($('#datsan_kh').val())">test</button>
+                                <!-- <button class='btn btn-primary' id='datsan_test' onclick="console.log($('#datsan_kh').val())">test</button> -->
                                 <button class='btn btn-primary' id='datsan_cancel'>Hủy</button>
                             </td>
                         </tr>
@@ -335,7 +335,7 @@ body{
                         ten_san : ten_san,
                         tong_tien : tong_tien,
                     },
-                    success: function(msg) {
+                    success: async function(msg) {
                         // console.log(msg)
                         if (msg.includes("trùng")) {
                             thongbaoloi("Không thể tạo đặt sân", msg);
@@ -348,11 +348,14 @@ body{
                         xemDsHuySan(thoiGianthuc);
                         xemDsThanhToan(thoiGianthuc);
 
-                        let arr = arrMenuDatSan();
-                        // console.log(arr);
+                        let arr = await arrMenuDatSan();
+                        console.log(arr.length);
                         if (arr.length > 0) { 
-                            luuMenuDatSan(arr,msg,tien_dat_san,tien_do_uong)
+                            let luuMenuDatSan_await = await luuMenuDatSan(arr,msg,tien_dat_san,tien_do_uong)
                         }
+
+                        getSanPham()
+                        document.getElementById('tongtien_douong').innerText = '0'
                     },
                     error: function() {
                         thongbaoloi("Lỗi hệ thống!!");
@@ -423,8 +426,6 @@ body{
                             taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                             $("#formDatSan").css("display","none");
                             $("#grayscreen").css("display","none");
-                            getSanPham()
-                            document.getElementById('tongtien_douong').innerText = '0'
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }
@@ -435,8 +436,6 @@ body{
                         taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
-                        getSanPham()
-                        document.getElementById('tongtien_douong').innerText = '0'
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }
@@ -455,8 +454,6 @@ body{
                         taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
-                        getSanPham()
-                        document.getElementById('tongtien_douong').innerText = '0'
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }

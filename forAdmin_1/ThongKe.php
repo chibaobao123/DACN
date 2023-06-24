@@ -34,11 +34,12 @@
 	<div class="soSanhChartSan">
 		<h2>Chọn sân để xem biểu đồ thông tin</h2>
 		<div id="multi_select_san_chart"></div>
-		<div id="compare_san_chart" style='height:500px'></div>
+		<div id="compare_san_chart" class='my-2' style='overflow:auto'></div>
 	</div>
-	<!-- <div class="soSanhSanPham">
+	<div class="CircleChartSanPham"  style="margin-bottom: 50px">
 		<h2>biểu đồ sản phẩm</h2>
-	</div> -->
+		<canvas id="doughnutSanPham"></canvas>
+	</div>
 </section>
 
 </section>
@@ -46,4 +47,5 @@
 <script>
     chartDoanhThu()
 	chartDoanhThuSan()
+	ChartProducts()	
 </script>

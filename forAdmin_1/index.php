@@ -330,7 +330,7 @@ body{
                         ten_san : ten_san,
                         tong_tien : tong_tien,
                     },
-                    success: function(msg) {
+                    success: async function(msg) {
                         if (msg.includes("trùng")) {
                             thongbaoloi("Không thể tạo đặt sân", msg);
                         } else {
@@ -343,11 +343,14 @@ body{
                         xemDsHuySan(thoiGianthuc);
                         xemDsThanhToan(thoiGianthuc);
 
-                        let arr = arrMenuDatSan();
+                        let arr = await  arrMenuDatSan();
                         // console.log(arr);
                         if (arr.length > 0) {
-                            luuMenuDatSan(arr,msg,tien_dat_san,tien_do_uong)
+                            let luuMenuDatSan_await = await luuMenuDatSan(arr,msg,tien_dat_san,tien_do_uong)
                         }
+
+                        getSanPham()
+                        document.getElementById('tongtien_douong').innerText = '0'
                     },
                     error: function() {
                         thongbaoloi("Lỗi hệ thống!!");
@@ -417,8 +420,6 @@ body{
                         taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
-                        getSanPham()
-                        document.getElementById('tongtien_douong').innerText = '0'
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }
@@ -429,8 +430,6 @@ body{
                         taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
-                        getSanPham()
-                        document.getElementById('tongtien_douong').innerText = '0'
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }
@@ -449,8 +448,6 @@ body{
                         taoDatSan(ma_kh, ma_san, bat_dau, ket_thuc, don_gia, ten_san, tong_tien, tien_dat_san, tien_do_uong);
                         $("#formDatSan").css("display","none");
                         $("#grayscreen").css("display","none");
-                        getSanPham()
-                        document.getElementById('tongtien_douong').innerText = '0'
                     } else {
                         thongbaoloi("Bạn phải đặt sân nhiều hơn 1 tiếng đồng hồ");
                     }

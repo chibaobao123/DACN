@@ -1512,9 +1512,9 @@ function getDataKhoHangKiemKe() {
 			  
 				<tbody class='border'>
 				<tr>
-				<td width='439'>Tổng:</td>
-				<td width='109'>${formatMoney(tongTonKho)}</td>
-				<td width='136'>${formatMoney(tongTien)}</td>
+				<td width='411'>Tổng:</td>
+				<td width='123'>${formatMoney(tongTonKho)}</td>
+				<td width='203'>${formatMoney(tongTien)}</td>
 				<td></td>
 			  </tr>
 				</tbody>
@@ -1602,9 +1602,9 @@ function getDataKhoHang() {
 		
 		<tbody class='border'>
 			<tr>
-				<td width='727'>Tổng:</td>
-				<td width='180'>${formatMoney(tongTonKho)}</td>
-				<td width='225'>${formatMoney(tongTien)}</td>
+				<td width='652'>Tổng:</td>
+				<td width='195'>${formatMoney(tongTonKho)}</td>
+				<td width='322'>${formatMoney(tongTien)}</td>
 				<td>    
 				<a class="btn btn-primary" onclick="xuatFileExcel('thongTinKhoHang','Phieu kho')">Xuất Excel</a>
 				</td>
@@ -1654,13 +1654,13 @@ function chinhSuaThongTinKho(btn, order, id) {
 	let ten_col = $(row).find("td")[1];
 	let ten_value = $(ten_col).text();
 	$(ten_col).html(
-		`<input style='width:100%' id='ten_${order}' type='text' value='${ten_value}' />`
+		`<input style='width:100%' id='ten_${order}' type='text' value='${ten_value}' /> <br /><span class='thongbao'>${THONG_BAO}</span>`
 	);
 
 	let gia_col = $(row).find("td")[2];
 	let gia_value = Number($(gia_col).text().replace(/,/g, ""));
 	$(gia_col).html(
-		`<input style='width:100%' id='gia_${order}' type='text' value='${gia_value}' />`
+		`<input style='width:100%' id='gia_${order}' type='text' value='${gia_value}' /> <br /><span class='thongbao'>${THONG_BAO}</span>`
 	);
 
 	$(`#ten_${order}, #gia_${order}`).keyup(function (e) {
@@ -1679,14 +1679,19 @@ function chinhSuaThongTinKho(btn, order, id) {
 				.val()
 				.trim();
 
-			suaThongTinKho(ten_moi, gia_moi, id);
-
-			$(ten_col).html(ten_moi);
-			$(gia_col).html(gia_moi);
+			if (ten_moi != ten_value || gia_moi != gia_value) {
+				suaThongTinKho(ten_moi, gia_moi, id);
+				$(ten_col).html(ten_moi);
+				$(gia_col).html(gia_moi);
+			} else {
+				$(ten_col).html(ten_value);
+				$(gia_col).html(gia_value);
+			}
 			$($(".btn-edit")[order - 1]).removeAttr("disabled");
 		}
 	});
 }
+
 function suaThongTinKho(ten, gia, id) {
 	$.ajax({
 		url: "/quanlysanbong/api/khoHang.php",
@@ -1708,6 +1713,7 @@ function suaThongTinKho(ten, gia, id) {
 		},
 	});
 }
+
 function xoaSanPham(id) {
 	$.ajax({
 		url: "/quanlysanbong/api/khoHang.php",
@@ -2054,13 +2060,23 @@ function getSanPham() {
 }
 
 function countChenhlechSanPhamDatSan(tt, tk, id) {
-	if (tt == null || tt == undefined || tt == "") tt = 0;
+	tt.trim()
+	if (tt == null || tt == undefined || tt == "") {
+		tt = 0;
+		$("#countChenhlechSanPhamDatSan_" + id).css("background-color", "#e9ecef");
+	}
+
 	let conLai = parseInt(tk) - parseInt(tt);
 
 	$("#countChenhlechSanPhamDatSan_" + id).val(conLai);
 
-	if (conLai == 0 || conLai > 0)
+	if (conLai == 0 || conLai > 0){
 		$("#countChenhlechSanPhamDatSan_" + id).css("background-color", "green");
+	}
+
+	if (conLai == tk){
+		$("#countChenhlechSanPhamDatSan_" + id).css("background-color", "#e9ecef");
+	}
 
 	if (conLai < 0)
 		$("#countChenhlechSanPhamDatSan_" + id).css({
@@ -2592,6 +2608,7 @@ async function createChartCompare(tagID, id) {
 
 		let parent = document.getElementById("compare_san_chart")
 		parent.appendChild(div);
+		parent.style.height = '700px'
 
 
 
@@ -2628,3 +2645,373 @@ function xuatFileExcel(idTable, name) {
 		exclude_inputs: false,
 	});
 }
+
+function themDong() {
+	let slHang = document.querySelectorAll(
+		`#ThemSanPhanVaoKho_table tbody tr`
+	).length;
+	let tbody = document.querySelector(
+		`#ThemSanPhanVaoKho_table tbody`
+	);
+	// console.log(slHang);
+	let td_number = slHang;
+
+	let row = tbody.insertRow(slHang);
+	let cell1 = row.insertCell(0);
+	let cell2 = row.insertCell(1);
+	let cell3 = row.insertCell(2);
+	let cell4 = row.insertCell(3);
+	cell1.innerHTML = `<input class="form-control" type="text" placeholder="abc...."/>`;
+	cell2.innerHTML = `<input class="form-control" type="number" min="1000" step="1000" placeholder="> 1000"/>`;
+	cell3.innerHTML = `<input class="form-control" type="number"min="1" placeholder="> 1"/>`;
+	cell4.innerHTML = `<button class="btn" onclick="deleteRow(this)"><i class='fas fa-times text-danger'></i></button>`;
+}
+
+function deleteRow(btn) {
+	var row = btn.parentNode.parentNode;
+	row.parentNode.removeChild(row);
+}
+
+function themNhieuSanPham() {
+	let slHang = document.querySelectorAll(
+		`#ThemSanPhanVaoKho_table tbody tr`
+	).length;
+
+	let tbody = document.querySelector(
+		`#ThemSanPhanVaoKho_table tbody`
+	);
+
+	let access = checkThemNhieuSanPham();
+
+	if (access) {
+		for (let i = 0; i < slHang; i++) {
+			let ten = tbody.rows[i].cells[0].children[0].value.trim();
+			let gia = tbody.rows[i].cells[1].children[0].value.trim();
+			let so_luong = tbody.rows[i].cells[2].children[0].value.trim();
+			themNhieuSanPhamAPI(ten, gia, so_luong);
+		}
+
+		thongbaotot(`Đã lưu ${slHang} sản phẩm`)
+		tailaitrang()
+	} else {
+		alert('Bạn chưa nhập đủ thông tin');
+		return;
+	}
+
+
+}
+
+function checkThemNhieuSanPham() {
+	let slHang = document.querySelectorAll(
+		`#ThemSanPhanVaoKho_table tbody tr`
+	).length;
+
+	let tbody = document.querySelector(
+		`#ThemSanPhanVaoKho_table tbody`
+	);
+
+	let access = false
+
+	for (let i = 0; i < slHang; i++) {
+		let ten = tbody.rows[i].cells[0].children[0].value.trim();
+		let gia = tbody.rows[i].cells[1].children[0].value.trim();
+		let so_luong = tbody.rows[i].cells[2].children[0].value.trim();
+
+		if (ten == '' || gia == '' || so_luong == '') {
+			access = false;
+			break;
+		}
+
+		access = true
+	}
+
+	return access
+}
+
+function themNhieuSanPhamAPI(ten, gia, so_luong) {
+	$.ajax({
+		url: "/quanlysanbong/api/khoHang.php",
+		type: "POST",
+		cache: false,
+		data: {
+			action: 'THEM_NHIEU_SAN_PHAM',
+			ten: ten,
+			gia: gia,
+			so_luong: so_luong
+		},
+		success: function (res) {
+			console.log(res);
+		},
+	});
+}
+
+function CapNhatSanPham() {
+	$.ajax({
+	  url: "/quanlysanbong/api/khoHang.php",
+	  type: "GET",
+	  cache: false,
+	  data: {
+		action: "getDataKhoHang",
+	  },
+	  success: function (json) {
+		let data = $.parseJSON(json);
+		// console.log(data)
+  
+		let html = "",
+		  total = "",
+		  order = 1,
+		  tongTien = 0,
+		  tongTonKho = 0;
+  
+		html += `<div style = 'height:480px; overflow-y:  scroll' >
+					<table class='mytable text-center' id='CapNhatSanPham' >
+					  <thead>
+						<tr class="">
+						  <th>Mã sản phẩm</th>
+						  <th>Tên sản phẩm</th>
+						  <th>Gía tiền</th>
+						  <th>Tồn kho</th>
+						  <th>Số lượng</th>
+						  <th class='noExl'>Công cụ</th>
+						</tr>
+					  </thead>
+					  <tbody>`;
+		data.forEach((e) => {
+		  let thanhTien = parseInt(e.gia_tien) * parseInt(e.ton_kho);
+		  tongTien += Number(thanhTien);
+		  tongTonKho += Number(e.ton_kho);
+  
+		  html += `
+						<tr>
+						  <td>${e.id}</td>
+						  <td>${e.san_pham}</td>
+						  <td>${formatMoney(e.gia_tien)}</td>
+						  <td>${e.ton_kho}</td>
+						  <td><input type="number" name="so_luong_moi" /></td>
+						  <td class='noExl'>
+							<button title="Chỉnh sửa" class="btn-edit btn" onclick="chinhSuaThongTinKho(this,${order},${e.id
+			})" order='${order}'><i class="fas fa-edit" aria-hidden="true"></i></button>
+							<button title="Xóa" class="btn-del btn" onclick="xoaSanPham(${e.id
+			})"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+						  </td>
+						</tr>
+						`;
+		  order++;
+		});
+  
+		html += `
+			</tbody>
+		  </table>
+		  </div>
+		  </div>
+		  `;
+  
+		$("#kho").html(html);
+		$("#total").html(`
+			<div class="text-right m-2">
+			  <button class="btn btn-primary btn-lg" onclick="luuCapNhatSoLuong()">Lưu cập nhật</button>
+			</div>
+		`);
+		$('#xemPhieuKiemKe').html('')
+  
+	  },
+	  error: function () {
+		alert("Lỗi lấy dữ liệu !!!");
+	  },
+	});
+  }
+  
+  function luuCapNhatSoLuong() {
+	let slHang = document.querySelectorAll(
+	  `#CapNhatSanPham tbody tr`
+	).length;
+  
+	let tbody = document.querySelector(
+	  `#CapNhatSanPham tbody`
+	);
+  
+	for (let i = 0; i < slHang; i++) {
+	  let id = tbody.rows[i].cells[0].innerText.trim();
+	  let so_luong = tbody.rows[i].cells[4].children[0].value.trim();
+	  if(so_luong != ''){
+		capNhatNhieuSanPhamAPI(id,so_luong);
+	  }
+	}
+	thongbaotot('Đã cập nhật sản phẩm !!')
+	tailaitrang()
+  }
+  
+  function capNhatNhieuSanPhamAPI(id, so_luong) {
+	$.ajax({
+	  url: "/quanlysanbong/api/khoHang.php",
+	  type: "POST",
+	  cache: false,
+	  data: {
+		action: 'CAP_NHAT_SAN_PHAM',
+		id: id,
+		so_luong: so_luong
+	  },
+	  success: function (res) {
+		console.log(res);
+	  },
+	});
+  }
+  
+  async function ChartProducts(){
+	let label = [];
+	let dataChart = [];
+	let a1 = await $.ajax({
+	  url: "/quanlysanbong/api/khoHang.php",
+	  type: "GET",
+	  cache: false,
+	  data: {
+		action: 'getDataKhoHang',
+	  },
+	}).then((res) => {
+	  let data = $.parseJSON(res);
+	  for(let i = 0; i < data.length; i++){
+		label.push(data[i].san_pham)
+		$.ajax({
+		  url: "/quanlysanbong/api/khoHang.php",
+		  type: "GET",
+		  cache: false,
+		  data: {
+			action: 'CHART_SAN_PHAM',
+			id: data[i].id,
+		  },
+		}).done((res) => {
+		  let obj = JSON.parse(res);
+		  dataChart.push(obj)
+		});
+	  }
+	}).done(() => {
+		setTimeout(() => {
+		  renderChartSanPham (label,dataChart,"doughnutSanPham")
+		},500)
+	  }
+	);
+  }
+  
+  function renderChartSanPham (label,dataChart,id){
+	const dataSource = {
+	  labels: label,
+	  datasets: [
+		{
+		  backgroundColor: [
+			"rgba(255, 99, 132, 0.2)",
+			"rgba(54, 162, 235, 0.2)",
+			"rgba(255, 206, 86, 0.2)",
+			"rgba(75, 192, 192, 0.2)",
+			"rgba(153, 102, 255, 0.2)",
+			"rgba(255, 159, 64, 0.2)",
+			"rgba(54, 162, 235, 0.2)",
+			"rgba(255, 206, 86, 0.2)",
+			"rgba(75, 192, 192, 0.2)",
+			"rgba(153, 102, 255, 0.2)",
+			"rgba(255, 159, 64, 0.2)",
+		  ],
+		  borderColor: [
+			"rgba(255, 99, 132, 1)",
+			"rgba(54, 162, 235, 1)",
+			"rgba(255, 206, 86, 1)",
+			"rgba(75, 192, 192, 1)",
+			"rgba(153, 102, 255, 1)",
+			"rgba(255, 159, 64, 1)",
+			"rgba(54, 162, 235, 1)",
+			"rgba(255, 206, 86, 1)",
+			"rgba(75, 192, 192, 1)",
+			"rgba(153, 102, 255, 1)",
+			"rgba(255, 159, 64, 1)",
+			"rgba(255, 99, 132, 1)",
+			"rgba(54, 162, 235, 1)",
+			"rgba(255, 206, 86, 1)",
+			"rgba(75, 192, 192, 1)",
+			"rgba(153, 102, 255, 1)",
+			"rgba(255, 159, 64, 1)",
+			"rgba(54, 162, 235, 1)",
+			"rgba(255, 206, 86, 1)",
+			"rgba(75, 192, 192, 1)",
+			"rgba(153, 102, 255, 1)",
+			"rgba(255, 159, 64, 1)",
+		  ],
+		  //   fill: false,
+		  //   tension: 0.1,
+		  data: dataChart,
+		  borderWidth: 1,
+		  borderRadius: 10,
+		},
+	  ],
+	};
+  
+	// drawShape plugin
+	// const drawShape = {
+	//   id: "drawShape",
+	//   afterDraw(chart, args, options) {
+	//     const {
+	//       ctx,
+	//       data: { top, bottom, left, right, width, height },
+	//     } = chart;
+	//     // console.log(chart.data.datasets);
+	//     chart.data.datasets.forEach((dataset, i) => {
+	//       chart.getDatasetMeta(i).data.forEach((datapoint, i) => {
+	//         const { x, y } = datapoint.tooltipPosition();
+  
+	//         const halfwidth = width / 2;
+	//         const halfheight = height / 2;
+  
+	//         const xLine = x >= halfwidth ? x + 100 : x - 100;
+	//         const yLine = y >= halfheight ? y + 100 : y - 100;
+	//         const extraLine = x >= halfwidth ? 15 : -15;
+  
+	//         //
+	//         ctx.beginPath();
+	//         ctx.moveTo(x, y);
+	//         ctx.lineTo(xLine, yLine);
+	//         ctx.lineTo(xLine + extraLine, yLine);
+	//         ctx.strokeStyle = dataset.borderColor[i];
+	//         ctx.stroke();
+  
+	//         const textWidth = ctx.measureText(chart.data.labels[i]).width;
+	//         ctx.font = "16px Arial";
+  
+	//         // control the position
+	//         const textPosition = x >= halfwidth ? "left" : "right";
+	//         const plusFivePx = x >= halfwidth ? 10 : -10;
+	//         ctx.textAlign = textPosition;
+	//         ctx.textBaseline = "middle";
+	//         ctx.fillStyle = dataset.borderColor[i];
+	//         ctx.fillText(
+	//           chart.data.labels[i],
+	//           xLine + extraLine + plusFivePx,
+	//           yLine
+	//         );
+	//       });
+	//     });
+	//   },
+	// };
+  
+	const config = {
+	  type: "bar",
+	  data: dataSource,
+	  options: {
+		indexAxis: 'y',
+		scales: {
+		  x: {
+			beginAtZero: true,
+			grace:1
+		  }
+		},
+		plugins: {
+		  legend: {
+			display: false,
+		  },
+		},
+	  },
+	  // plugins: [drawShape],
+	};
+  
+	const doughnutMonAn = new Chart(
+	  document.getElementById(id),
+	  config
+	);
+  }

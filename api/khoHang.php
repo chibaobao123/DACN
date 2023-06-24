@@ -282,4 +282,65 @@
 		echo json_encode($json_response);
 	}
 
+	if (isset($_POST['action']) && $_POST['action']=='THEM_NHIEU_SAN_PHAM') {
+		$ten = $_POST['ten'];
+		$gia = $_POST['gia'];
+		$so_luong = $_POST['so_luong'];
+
+		$create = mysqli_query(
+			$db, 
+			"INSERT INTO kho_hang(san_pham,gia_tien,ton_kho) 
+				VALUE('$ten','$gia','$so_luong')"
+		);
+
+		if($create){
+			echo true;
+		} else {
+			echo var_dump($create);
+		}
+	}
+
+	if (isset($_POST['action']) && $_POST['action']=='CAP_NHAT_SAN_PHAM') {
+		$id = $_POST['id'];
+		$so_luong = $_POST['so_luong'];
+
+		$ton_kho = mysqli_query(
+			$db, 
+			"SELECT ton_kho FROM kho_hang where id='$id'"
+		);
+
+		$row = mysqli_fetch_assoc($ton_kho); 
+	
+
+		$update_ton_kho = (int)($row['ton_kho']) + (int)($so_luong);
+
+		$update = mysqli_query(
+			$db, 
+			"UPDATE kho_hang
+			SET ton_kho = '$update_ton_kho'
+			WHERE id='$id';"
+		);
+
+		if($update){
+			echo "Cập nhật thành công";
+		}
+	}
+
+	if (isset($_GET['action']) && $_GET['action']=='CHART_SAN_PHAM') {
+		$id = $_GET['id'];
+
+		$so_luong = mysqli_query(
+			$db, 
+			"SELECT SUM(so_luong) as total FROM hoa_don_chi_tiet where san_pham='$id'"
+		);
+
+		$row = mysqli_fetch_assoc($so_luong); 
+
+		if($row['total'] == null){
+			echo '0';
+		}else{
+			echo $row['total'];
+		}
+	}
+
 ?>
